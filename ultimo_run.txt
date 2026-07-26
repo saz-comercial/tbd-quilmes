@@ -1,0 +1,27 @@
+2026-07-26 04:55:53 UTC
+
+=== Generador de reportes TBD ===
+
+📄 Base de ventas: Base Santi.xlsx
+   24660 filas de venta cargadas.
+📄 Estructura de clientes: Estructura actualizada 23-07-2026.xlsx
+   3599 clientes reales en Estructura (3 filas basura descartadas).
+
+--- Validando números de control ---
+  ✅ TBD CZA: TBD=12646 (esperado 12646) | Clientes=2107 (esperado 2107)
+  ✅ TBD CORE + VALUE: TBD=8813 (esperado 8813) | Clientes=2014 (esperado 2014)
+  ✅ TBD ABOVE CORE: TBD=3833 (esperado 3833) | Clientes=1185 (esperado 1185)
+  ✅ TBD LATONES: TBD=2905 (esperado 2905) | Clientes=1200 (esperado 1200)
+  ✅ TBD 0.0% + MUL: TBD=1422 (esperado 1422) | Clientes=773 (esperado 773)
+  ✅ TBD UNG + AGUA: TBD=9243 (esperado 9243) | Clientes=1848 (esperado 1848)
+
+✅ Los 6 números de control cierran perfecto.
+
+⚠️  8 clientes están en la base pero NO en Estructura (altas nuevas, no van a ningún VE):
+   310240, 355938, 437325, 437616, 506496, 568787, 568788, 568800
+
+--- Armando reportes por vendedor ---
+
+✅ Generé 27 reportes en la carpeta 'salida/'.
+   Mandale a cada vendedor el HTML de su VE (por WhatsApp, mail, lo que uses).
+   Se abre directo en el celular, sin internet y sin instalar nada.
