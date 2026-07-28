@@ -158,7 +158,8 @@ def cargar_base(ws_base, marca_map, calibre_map, negocio_map):
         dsc_calibre = norm(r[idx["DSC Calibre"]])
         dsc_negocio = norm(r[idx["DSC Negocio"]])
         dsc_subcanal = norm(r[idx["DSC Sub-canal MKT"]])
-        hl = r[idx["#HL Vta Bruta"]] or 0
+        hl_crudo = r[idx["#HL Vta Bruta"]]
+        hl = hl_crudo if isinstance(hl_crudo, (int, float)) else 0
 
         m = marca_map.get(dsc_marca)
         if m is None:
