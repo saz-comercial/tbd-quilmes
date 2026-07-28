@@ -1,6 +1,5 @@
-2026-07-28 00:31:54 UTC
+2026-07-28 00:33:36 UTC
 
-FALLO LA GENERACION:
 === Generador de reportes TBD ===
 
 📄 Base de ventas: Base Santi.xlsx
@@ -23,11 +22,7 @@ FALLO LA GENERACION:
    310240, 355938, 437325, 437616, 506496, 568787, 568788
 
 --- Armando reportes por vendedor ---
-Traceback (most recent call last):
-  File "/home/runner/work/tbd-quilmes-datos/tbd-quilmes-datos/sitio/generar_reportes.py", line 530, in <module>
-    modelo = construir_modelo_kpi(registros, clientes_estructura, kpis)
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/runner/work/tbd-quilmes-datos/tbd-quilmes-datos/sitio/generar_reportes.py", line 386, in construir_modelo_kpi
-    pop_global[combo] = pop_global.get(combo, 0) + hl
-                        ~~~~~~~~~~~~~~~~~~~~~~~~~^~~~
-TypeError: unsupported operand type(s) for +: 'int' and 'str'
+
+✅ Generé 27 reportes en la carpeta 'salida/'.
+   Mandale a cada vendedor el HTML de su VE (por WhatsApp, mail, lo que uses).
+   Se abre directo en el celular, sin internet y sin instalar nada.
