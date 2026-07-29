@@ -1,19 +1,19 @@
-2026-07-28 11:03:22 UTC
+2026-07-29 11:14:45 UTC
 
 === Generador de reportes TBD ===
 
 📄 Base de ventas: Base Santi.xlsx
-   28798 filas de venta cargadas.
+   29716 filas de venta cargadas.
 📄 Estructura de clientes: Estructura actualizada 23-07-2026.xlsx
    3599 clientes reales en Estructura (3 filas basura descartadas).
 
 --- Validando números de control ---
-  ❌ TBD CZA: TBD=14352 (esperado 12646) | Clientes=2226 (esperado 2107)
-  ❌ TBD CORE + VALUE: TBD=9821 (esperado 8813) | Clientes=2122 (esperado 2014)
-  ❌ TBD ABOVE CORE: TBD=4531 (esperado 3833) | Clientes=1310 (esperado 1185)
-  ❌ TBD LATONES: TBD=3299 (esperado 2905) | Clientes=1304 (esperado 1200)
-  ❌ TBD 0.0% + MUL: TBD=1667 (esperado 1422) | Clientes=852 (esperado 773)
-  ❌ TBD UNG + AGUA: TBD=10800 (esperado 9243) | Clientes=2015 (esperado 1848)
+  ❌ TBD CZA: TBD=14712 (esperado 12646) | Clientes=2252 (esperado 2107)
+  ❌ TBD CORE + VALUE: TBD=10037 (esperado 8813) | Clientes=2147 (esperado 2014)
+  ❌ TBD ABOVE CORE: TBD=4675 (esperado 3833) | Clientes=1330 (esperado 1185)
+  ❌ TBD LATONES: TBD=3392 (esperado 2905) | Clientes=1331 (esperado 1200)
+  ❌ TBD 0.0% + MUL: TBD=1723 (esperado 1422) | Clientes=871 (esperado 773)
+  ❌ TBD UNG + AGUA: TBD=11185 (esperado 9243) | Clientes=2061 (esperado 1848)
 
 ⚠️  Los números de control NO cierran. Puede ser normal si el mes avanzó
    (la base se actualiza a diario), pero si el desvío es grande, avisame.
