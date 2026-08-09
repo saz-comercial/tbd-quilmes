@@ -92,7 +92,7 @@ def cargar_workbook_estructura():
 COLUMNAS_BASE_REQUERIDAS = [
     "Año Mes Cierre", "COD Cliente", "DSC Sub-canal MKT", "COD Jefe Venta Act",
     "COD Zona Act", "COD Territorio Act", "DSC Negocio", "DSC Marca",
-    "DSC Calibre", "DSC Familia", "#HL Vta Bruta", "$ Neto",
+    "DSC Calibre", "DSC Familia", "DSC Sabor", "#HL Vta Bruta", "$ Neto",
     "$ SC 286 - S/C Acc Ctr MKT", "$ Impu Tot", "COD Producto",
     "DSC Sub-Region Agrup Act",
 ]
@@ -156,6 +156,8 @@ def cargar_base(ws_base, marca_map, calibre_map, negocio_map):
         cod_cliente = r[idx["COD Cliente"]]
         dsc_marca = norm(r[idx["DSC Marca"]])
         dsc_calibre = norm(r[idx["DSC Calibre"]])
+        dsc_familia = norm(r[idx["DSC Familia"]])
+        dsc_sabor = norm(r[idx["DSC Sabor"]])
         dsc_negocio = norm(r[idx["DSC Negocio"]])
         dsc_subcanal = norm(r[idx["DSC Sub-canal MKT"]])
         hl_crudo = r[idx["#HL Vta Bruta"]]
@@ -180,6 +182,8 @@ def cargar_base(ws_base, marca_map, calibre_map, negocio_map):
             "cod_cliente": cod_cliente,
             "dsc_marca": dsc_marca,
             "dsc_calibre": dsc_calibre,
+            "dsc_familia": dsc_familia,
+            "dsc_sabor": dsc_sabor,
             "dsc_subcanal": dsc_subcanal,
             "negocio_agrup": negocio_agrup,
             "segmento": segmento,
@@ -298,7 +302,10 @@ def definir_kpis():
         },
         "TBD UNG + AGUA": {
             "filtro": lambda r: r["negocio_agrup"] in ("UNG", "AGUAS"),
-            "combo": lambda r: (r["dsc_marca"], r["dsc_calibre"]),
+            # unico KPI que dedupe por 4 campos: el calibre solo no alcanza,
+            # dos filas con mismo marca+calibre pueden ser sabores distintos
+            # (confirmado por Santiago el 28/07: agregaron DSC Sabor a la base).
+            "combo": lambda r: (r["dsc_marca"], r["dsc_calibre"], r["dsc_familia"], r["dsc_sabor"]),
             "modo": "top5",
         },
     }
@@ -320,7 +327,9 @@ NUMEROS_DE_CONTROL = {
     "TBD ABOVE CORE": (3833, 1185),
     "TBD LATONES": (2905, 1200),
     "TBD 0.0% + MUL": (1422, 773),
-    "TBD UNG + AGUA": (9243, 1848),
+    # TBD UNG + AGUA sale de esta lista el 28/07/2026: cambio la clave de
+    # dedup (ahora suma DSC Sabor) y el numero viejo (9243/1848) ya no es
+    # comparable. No es que este mal, es una definicion distinta.
 }
 
 
@@ -328,6 +337,9 @@ def validar_numeros_de_control(registros, kpis):
     print("\n--- Validando números de control ---")
     ok_total = True
     for nombre, spec in kpis.items():
+        if nombre not in NUMEROS_DE_CONTROL:
+            print(f"  ℹ️  {nombre}: sin número de control fijo (definición cambió recientemente), no se valida.")
+            continue
         combos_por_cliente = set()
         for r in registros:
             if spec["filtro"](r):
@@ -353,8 +365,10 @@ def titulo(texto):
     return str(texto).title()
 
 
-def nombre_combo(marca, calibre):
-    return f"{titulo(marca)} x {titulo(calibre)}"
+def nombre_combo(*partes):
+    """Arma el nombre para mostrar de un combo, sea de 2 partes (marca, calibre)
+    o de 4 (marca, calibre, familia, sabor, como en TBD UNG + AGUA)."""
+    return " x ".join(titulo(p) for p in partes)
 
 
 def construir_modelo_kpi(registros, clientes_estructura, kpis):
@@ -376,8 +390,8 @@ def construir_modelo_kpi(registros, clientes_estructura, kpis):
             if not spec["filtro"](r):
                 continue
             combo = spec["combo"](r)
-            if combo[0] is None or combo[1] is None:
-                continue  # marca o calibre sin clasificar: no lo podemos mostrar prolijo
+            if any(parte is None for parte in combo):
+                continue  # algun campo del combo (marca/calibre/familia/sabor) sin dato: no lo mostramos prolijo
             universo.add(combo)
             combos_cliente.setdefault(r["cod_cliente"], set()).add(combo)
 
@@ -455,6 +469,17 @@ def construir_datos_por_ve(clientes_estructura, modelo, kpis):
         lista.sort(key=lambda c: (c["nombre"], c["cod"]))
 
     return por_ve
+
+
+def calcular_ccc(clientes):
+    """
+    CCC = Clientes Con Compra de cerveza: cuantos de la cartera del VE
+    compraron aunque sea 1 combo de cerveza este mes, sobre el total de
+    clientes que tiene asignados. Usa la misma logica que TBD CZA (cualquier
+    NEGOCIO agrup == CERVEZA), asi que reaprovecha ese calculo.
+    """
+    con_compra = sum(1 for c in clientes if c["kpi"]["TBD CZA"]["tiene"] > 0)
+    return {"con_compra": con_compra, "total": len(clientes)}
 
 
 def totales_por_kpi(clientes, nombres_kpi):
@@ -548,6 +573,7 @@ if __name__ == "__main__":
             "fecha": fecha_hoy,
             "kpis": nombres_kpi,
             "kpiTotales": totales_por_kpi(clientes, nombres_kpi),
+            "ccc": calcular_ccc(clientes),
             "clientes": clientes,
         }
         html = plantilla.replace("__VE__", str(ve)).replace("__FECHA__", fecha_hoy)

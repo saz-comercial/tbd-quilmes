@@ -18,6 +18,10 @@
   header h1{font-size:16px;margin:0;font-weight:600;}
   header .sub{font-size:12px;opacity:.85;margin-top:2px;}
 
+  .ccc{margin:10px 10px 0;padding:8px 12px;background:#e8f0fe;border:1px solid #c6dafc;
+       border-radius:10px;font-size:12.5px;color:#1a56db;display:flex;justify-content:space-between;align-items:center;}
+  .ccc b{font-size:15px;}
+
   .semana{display:flex;gap:6px;padding:10px 10px 4px;overflow-x:auto;}
   .dia-btn{flex:1 0 auto;min-width:52px;text-align:center;border:1px solid var(--borde);
            border-radius:10px;padding:6px 4px;background:#fff;cursor:pointer;font-size:12px;}
@@ -84,6 +88,7 @@
   <div class="sub">Datos al __FECHA__</div>
 </header>
 
+<div class="ccc" id="ccc"></div>
 <div class="semana" id="semana"></div>
 <div class="kpis" id="kpis"></div>
 <div class="buscador"><input id="buscador" type="text" placeholder="Buscar cliente por nombre o código..."></div>
@@ -127,6 +132,12 @@ function renderSemana(){
     btn.onclick = () => { diaFiltro = (diaFiltro === dia) ? null : dia; renderTodo(); };
     cont.appendChild(btn);
   });
+}
+
+function renderCcc(){
+  const c = DATOS.ccc;
+  document.getElementById("ccc").innerHTML =
+    `<span>CCC · clientes con compra de cerveza</span><b>${c.con_compra} / ${c.total}</b>`;
 }
 
 function renderKpis(){
@@ -263,6 +274,7 @@ document.getElementById("buscador").addEventListener("input", (e) => {
 });
 
 function renderTodo(){
+  renderCcc();
   renderSemana();
   renderKpis();
   renderResumen();
