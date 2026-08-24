@@ -1,27 +1,25 @@
-2026-08-20 11:29:04 UTC
+2026-08-24 10:08:44 UTC
 
 === Generador de reportes TBD ===
 
 📄 Base de ventas: Base Santi.xlsx
-   20349 filas de venta cargadas.
+   23589 filas de venta cargadas.
 📄 Estructura de clientes: Estructura actualizada 23-07-2026.xlsx
    3599 clientes reales en Estructura (3 filas basura descartadas).
 
-⚠️  Calibres de CERVEZA sin clasificar en codif (afecta CZA/LATONES/etc): {'410 cc'}
-
 --- Validando números de control ---
-  ❌ TBD CZA: TBD=10204 (esperado 12646) | Clientes=1938 (esperado 2107)
-  ❌ TBD CORE + VALUE: TBD=6930 (esperado 8813) | Clientes=1813 (esperado 2014)
-  ❌ TBD ABOVE CORE: TBD=3274 (esperado 3833) | Clientes=1126 (esperado 1185)
-  ❌ TBD LATONES: TBD=2434 (esperado 2905) | Clientes=1047 (esperado 1200)
-  ❌ TBD 0.0% + MUL: TBD=1082 (esperado 1422) | Clientes=616 (esperado 773)
+  ❌ TBD CZA: TBD=11681 (esperado 12646) | Clientes=2066 (esperado 2107)
+  ❌ TBD CORE + VALUE: TBD=7884 (esperado 8813) | Clientes=1948 (esperado 2014)
+  ❌ TBD ABOVE CORE: TBD=3797 (esperado 3833) | Clientes=1229 (esperado 1185)
+  ❌ TBD LATONES: TBD=2832 (esperado 2905) | Clientes=1184 (esperado 1200)
+  ❌ TBD 0.0% + MUL: TBD=1278 (esperado 1422) | Clientes=687 (esperado 773)
   ℹ️  TBD UNG + AGUA: sin número de control fijo (definición cambió recientemente), no se valida.
 
 ⚠️  Los números de control NO cierran. Puede ser normal si el mes avanzó
    (la base se actualiza a diario), pero si el desvío es grande, avisame.
 
-⚠️  21 clientes están en la base pero NO en Estructura (altas nuevas, no van a ningún VE):
-   310240, 437325, 568787, 568788, 568797, 568800, 569223, 569226, 569230, 569261, 569266, 569280, 569345, 569454, 569473, 569481, 569484, 569508, 569558, 569573, 569575
+⚠️  26 clientes están en la base pero NO en Estructura (altas nuevas, no van a ningún VE):
+   310240, 437325, 568787, 568788, 568797, 568798, 568800, 569223, 569226, 569230, 569261, 569266, 569280, 569345, 569379, 569408, 569454, 569473, 569479, 569481, 569484, 569508, 569545, 569558, 569573, 569575
 
 --- Armando reportes por vendedor ---
 
