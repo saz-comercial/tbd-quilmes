@@ -1,4 +1,4 @@
-2026-09-03 17:46:19 UTC
+2026-09-03 18:26:05 UTC
 
 === Generador de reportes TBD ===
 
@@ -20,6 +20,8 @@
 
 ⚠️  6 clientes están en la base pero NO en Estructura (altas nuevas, no van a ningún VE):
    569345, 569454, 569464, 569479, 569490, 569693
+📄 Negociaciones: TBD+ONLINE 2026.xls
+   132 clientes con negociación vigente hoy (0 filas vencidas o futuras, ignoradas).
 
 --- Armando reportes por vendedor ---
 
