@@ -1,4 +1,4 @@
-2026-09-03 18:46:57 UTC
+2026-09-03 19:01:28 UTC
 
 === Generador de reportes TBD ===
 
@@ -20,9 +20,10 @@
 
 ⚠️  6 clientes están en la base pero NO en Estructura (altas nuevas, no van a ningún VE):
    569345, 569454, 569464, 569479, 569490, 569693
-📄 Negociaciones + histórico: TBD+ONLINE 2026.xlsx
+📄 Negociaciones: TBD+ONLINE 2026.xlsx
    132 clientes con negociación vigente hoy (0 filas vencidas o futuras, ignoradas).
-   Histórico: 264348 filas, 2995 clientes con historial de cerveza, 2995 con historial de UNG/AGUAS.
+📄 historial_compras.csv: 5990 pares cliente+categoría cargados.
+   Guardé historial_compras.csv con 5990 pares cliente+categoría.
 
 --- Armando reportes por vendedor ---
 
