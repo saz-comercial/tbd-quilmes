@@ -43,6 +43,12 @@
   .fc-badge{font-size:11px;padding:3px 8px;border-radius:8px;background:var(--gris-claro);color:var(--gris);white-space:nowrap;}
   .fc-badge.si{background:#e8f0fe;color:var(--azul);}
 
+  .recencia-grupo{margin-bottom:14px;}
+  .recencia-grupo-titulo{font-size:12px;font-weight:700;color:var(--gris);text-transform:uppercase;
+                          letter-spacing:.03em;margin:10px 2px 6px;border-bottom:1px solid var(--borde);padding-bottom:4px;}
+  .recencia-grupo-titulo span{font-weight:400;text-transform:none;letter-spacing:0;}
+  .recencia-grupo:first-child .recencia-grupo-titulo{margin-top:0;}
+
   .detalle-neg{padding:16px 14px;}
   .detalle-neg .fc-sub{margin-bottom:14px;}
   .detalle-unidad{margin-bottom:16px;}
@@ -242,6 +248,26 @@ function renderCccBotones(){
   `;
 }
 
+const ORDEN_RECENCIA = ["UM", "U2M", "U3M", "U4M", "U5M", "U6M", "+6", "Sin compras en el histórico", "Sin datos"];
+
+function posicionRecencia(etiqueta){
+  const i = ORDEN_RECENCIA.indexOf(etiqueta);
+  return i === -1 ? ORDEN_RECENCIA.length : i;
+}
+
+function filaClienteHtml(c){
+  const neg = c.negociacion.tiene;
+  return `
+    <div class="fila-cliente ${neg ? "tiene-neg" : ""}" ${neg ? `onclick="irADetalle(${c.cod})"` : ""}>
+      <div>
+        <div class="fc-nombre">${c.nombre}</div>
+        <div class="fc-sub">Cód. ${c.cod} · ${c.canal || "Sin canal"}</div>
+      </div>
+      <div class="fc-badge ${neg ? "si" : ""}">${neg ? "Negociación" : "Sin negoc."}</div>
+    </div>
+  `;
+}
+
 function renderLista(){
   document.getElementById("lista-titulo").textContent = listaTitulo;
   const cont = document.getElementById("lista-clientes");
@@ -249,22 +275,27 @@ function renderLista(){
     cont.innerHTML = `<div class="vacio">No hay clientes en este grupo.</div>`;
     return;
   }
-  cont.innerHTML = listaActual.map(c => {
-    const neg = c.negociacion.tiene;
-    const recenciaLinea = listaCampoRecencia
-      ? `<div class="fc-sub">Última compra: ${c.recencia[listaCampoRecencia] || "sin datos"}</div>`
-      : "";
-    return `
-      <div class="fila-cliente ${neg ? "tiene-neg" : ""}" ${neg ? `onclick="irADetalle(${c.cod})"` : ""}>
-        <div>
-          <div class="fc-nombre">${c.nombre}</div>
-          <div class="fc-sub">Cód. ${c.cod} · ${c.canal || "Sin canal"}</div>
-          ${recenciaLinea}
-        </div>
-        <div class="fc-badge ${neg ? "si" : ""}">${neg ? "Negociación" : "Sin negoc."}</div>
-      </div>
-    `;
-  }).join("");
+
+  if(!listaCampoRecencia){
+    // CCC: lista simple, sin agrupar por recencia (compraron este mes).
+    cont.innerHTML = listaActual.map(filaClienteHtml).join("");
+    return;
+  }
+
+  // CNC: agrupada por hace cuánto no compra, del grupo más urgente (UM) al más viejo.
+  const grupos = {};
+  listaActual.forEach(c => {
+    const etiqueta = c.recencia[listaCampoRecencia] || "Sin datos";
+    (grupos[etiqueta] = grupos[etiqueta] || []).push(c);
+  });
+  const etiquetasOrdenadas = Object.keys(grupos).sort((a, b) => posicionRecencia(a) - posicionRecencia(b));
+
+  cont.innerHTML = etiquetasOrdenadas.map(etiqueta => `
+    <div class="recencia-grupo">
+      <div class="recencia-grupo-titulo">${etiqueta} <span>(${grupos[etiqueta].length})</span></div>
+      ${grupos[etiqueta].map(filaClienteHtml).join("")}
+    </div>
+  `).join("");
 }
 
 function formatoItemNegociacion(item){
