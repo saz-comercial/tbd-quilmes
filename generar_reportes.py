@@ -161,7 +161,11 @@ def _procesar_filas_negociacion(filas, idx, hoy):
             if valor == 0.0:
                 continue
 
-            item = {"unidad": unidad, "linea": linea, "tipo": tipo_nombre}
+            item = {
+                "unidad": unidad, "linea": linea, "tipo": tipo_nombre,
+                "vence": hasta.strftime("%d/%m/%Y"),
+                "dias_para_vencer": (hasta - hoy).days,
+            }
             if tipo_nombre == "Sin cargo fijo":
                 meses_totales = meses_entre(desde, hasta)
                 meses_transcurridos = min(max(meses_entre(desde, hoy), 0), meses_totales)
@@ -681,7 +685,24 @@ DIA_LABEL = {"LU": "Lunes", "MA": "Martes", "MI": "Miércoles", "JU": "Jueves", 
 NEGOCIACION_VACIA = {"tiene": False, "items": []}
 
 
-def construir_datos_por_ve(clientes_estructura, modelo, kpis, negociaciones, rec_cerveza, rec_ung):
+def calcular_volumen_por_cliente(registros):
+    """{cod: {"cerveza": hl_total, "ung_aguas": hl_total}} — para el Pareto de volumen."""
+    volumen = {}
+    for r in registros:
+        if r["negocio_agrup"] == "CERVEZA":
+            clave = "cerveza"
+        elif r["negocio_agrup"] in ("UNG", "AGUAS"):
+            clave = "ung_aguas"
+        else:
+            continue
+        v = volumen.setdefault(r["cod_cliente"], {"cerveza": 0.0, "ung_aguas": 0.0})
+        v[clave] += r["hl"] or 0
+
+
+    return volumen
+
+
+def construir_datos_por_ve(clientes_estructura, modelo, kpis, negociaciones, rec_cerveza, rec_ung, volumen_por_cliente):
     por_ve = {}
     for cod, info in clientes_estructura.items():
         ve = info["ve"] or "SIN VE"
@@ -719,6 +740,7 @@ def construir_datos_por_ve(clientes_estructura, modelo, kpis, negociaciones, rec
                 "cerveza": rec_cerveza.get(cod, "Sin compras en el histórico" if rec_cerveza else None),
                 "ung": rec_ung.get(cod, "Sin compras en el histórico" if rec_ung else None),
             },
+            "volumen": volumen_por_cliente.get(cod, {"cerveza": 0.0, "ung_aguas": 0.0}),
         }
         por_ve.setdefault(ve, []).append(cliente_final)
 
@@ -821,7 +843,8 @@ if __name__ == "__main__":
 
     print("\n--- Armando reportes por vendedor ---")
     modelo = construir_modelo_kpi(registros, clientes_estructura, kpis)
-    por_ve = construir_datos_por_ve(clientes_estructura, modelo, kpis, negociaciones, rec_cerveza, rec_ung)
+    volumen_por_cliente = calcular_volumen_por_cliente(registros)
+    por_ve = construir_datos_por_ve(clientes_estructura, modelo, kpis, negociaciones, rec_cerveza, rec_ung, volumen_por_cliente)
 
     os.makedirs(CARPETA_SALIDA, exist_ok=True)
     plantilla_path = os.path.join(CARPETA, "plantilla.html")
