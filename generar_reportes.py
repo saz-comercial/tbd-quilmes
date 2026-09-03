@@ -16,7 +16,22 @@ import re
 import sys
 import json
 import unicodedata
-from datetime import datetime
+from datetime import datetime, timedelta
+
+try:
+    from zoneinfo import ZoneInfo
+    ZONA_ARG = ZoneInfo("America/Argentina/Buenos_Aires")
+except Exception:
+    ZONA_ARG = None
+
+
+def hora_argentina():
+    """Hora actual en Argentina (UTC-3, sin horario de verano), sin importar
+    en qué huso horario esté corriendo el servidor (la rutina automática
+    corre en UTC). Devuelve un datetime naive, en hora ARG."""
+    if ZONA_ARG is not None:
+        return datetime.now(ZONA_ARG).replace(tzinfo=None)
+    return datetime.utcnow() - timedelta(hours=3)
 
 try:
     import openpyxl
@@ -794,7 +809,7 @@ if __name__ == "__main__":
         print(f"\n⚠️  {len(altas_nuevas)} clientes están en la base pero NO en Estructura (altas nuevas, no van a ningún VE):")
         print("   " + ", ".join(str(c) for c in sorted(altas_nuevas)))
 
-    ahora = datetime.now()
+    ahora = hora_argentina()
     negociaciones = cargar_negociaciones(ahora)
 
     anios_mes_presentes = [r["anio_mes"] for r in registros if r["anio_mes"] is not None]
