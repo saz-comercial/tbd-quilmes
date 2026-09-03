@@ -9,6 +9,7 @@ y el Excel de Estructura más nuevos, cruza todo, y genera un HTML por VE
 en la carpeta 'salida/'.
 """
 
+import csv
 import glob
 import os
 import re
@@ -83,6 +84,119 @@ def cargar_workbook_estructura():
     if "Estructura" not in wb.sheetnames:
         error_fatal(f"El Excel de Estructura no tiene una hoja llamada 'Estructura'. Hojas encontradas: {wb.sheetnames}")
     return wb, path
+
+
+COLUMNAS_NEGOCIACIONES_REQUERIDAS = [
+    "Vigencia desde", "Vigencia hasta", "Cliente código", "Cliente nombre",
+    "Unidad de negocio", "Línea de pricing", "Linea de pricing nombre",  # sic: la 2da "Linea" no lleva tilde en el archivo real
+    "Sin cargo fijo", "Descuento en factura", "Sin cargo variable",
+]
+
+
+def meses_entre(desde, hasta):
+    """Meses de calendario entre dos fechas (mismo criterio que usa Santiago
+    a mano: año*12+mes, sin contar días). Mínimo 1 para no dividir por cero."""
+    return max(1, (hasta.year - desde.year) * 12 + (hasta.month - desde.month))
+
+
+def cargar_negociaciones(hoy):
+    """
+    Busca el archivo de negociaciones (tipo 'TBD+ONLINE 2026.xls' — en
+    realidad texto separado por tabs en UTF-16, no un Excel de verdad).
+    No es obligatorio: si todavía no lo subieron, seguimos sin negociaciones
+    en vez de frenar todo el proceso (a diferencia de base/Estructura).
+
+    Devuelve {cod_cliente: {"tiene": bool, "items": [...]}}.
+    """
+    path = (
+        buscar_archivo_mas_nuevo("*ONLINE*.xls")
+        or buscar_archivo_mas_nuevo("*ONLINE*.xlsx")
+        or buscar_archivo_mas_nuevo("*egociac*.xls")
+        or buscar_archivo_mas_nuevo("*egociac*.xlsx")
+    )
+    if not path:
+        print("\nℹ️  No encontré el archivo de negociaciones (algo como 'TBD+ONLINE 2026.xls'). Sigo sin negociaciones por ahora.")
+        return {}
+
+    print(f"📄 Negociaciones: {os.path.basename(path)}")
+
+    # Es texto UTF-16 separado por tabs, aunque tenga extensión .xls/.xlsx.
+    try:
+        with open(path, encoding="utf-16", newline="") as f:
+            filas = list(csv.reader(f, delimiter="\t"))
+    except (UnicodeError, UnicodeDecodeError):
+        error_fatal(
+            "El archivo de negociaciones no es el formato de texto (UTF-16 con tabs) que esperaba. "
+            "¿Cambió el formato de exportación? Avisame antes de que siga."
+        )
+
+    if not filas:
+        error_fatal("El archivo de negociaciones está vacío.")
+
+    header = filas[0]
+    idx = {h.strip(): i for i, h in enumerate(header)}
+    faltantes = [c for c in COLUMNAS_NEGOCIACIONES_REQUERIDAS if c not in idx]
+    if faltantes:
+        error_fatal("Al archivo de negociaciones le faltan estas columnas: " + ", ".join(faltantes))
+
+    clientes = {}
+    filas_vencidas_o_futuras = 0
+    filas_con_error = 0
+    tipos = [
+        ("Sin cargo fijo", idx["Sin cargo fijo"]),
+        ("Descuento en factura", idx["Descuento en factura"]),
+        ("Sin cargo variable", idx["Sin cargo variable"]),
+    ]
+
+    for fila in filas[1:]:
+        if not fila or not fila[idx["Cliente código"]].strip():
+            continue
+        try:
+            cod = int(fila[idx["Cliente código"]].strip())
+            desde = datetime.strptime(fila[idx["Vigencia desde"]].strip(), "%d/%m/%Y")
+            hasta = datetime.strptime(fila[idx["Vigencia hasta"]].strip(), "%d/%m/%Y")
+        except (ValueError, IndexError):
+            filas_con_error += 1
+            continue
+
+        vigente = desde <= hoy <= hasta
+        if not vigente:
+            filas_vencidas_o_futuras += 1
+            continue
+
+        unidad = norm(fila[idx["Unidad de negocio"]])
+        linea = norm(fila[idx["Linea de pricing nombre"]])
+
+        for tipo_nombre, col in tipos:
+            crudo = fila[col].strip().replace(",", ".")
+            try:
+                valor = float(crudo)
+            except ValueError:
+                valor = 0.0
+            if valor == 0.0:
+                continue
+
+            item = {"unidad": unidad, "linea": linea, "tipo": tipo_nombre}
+            if tipo_nombre == "Sin cargo fijo":
+                meses_totales = meses_entre(desde, hasta)
+                meses_transcurridos = min(max(meses_entre(desde, hoy), 0), meses_totales)
+                por_mes = round(valor / meses_totales, 1)
+                restante = round(max(0.0, valor - por_mes * meses_transcurridos), 1)
+                item.update({
+                    "total": valor, "meses_totales": meses_totales,
+                    "por_mes": por_mes, "restante": restante,
+                })
+            else:
+                item["valor_pct"] = valor
+
+            clientes.setdefault(cod, []).append(item)
+
+    if filas_con_error:
+        print(f"   ⚠️  {filas_con_error} filas del archivo de negociaciones no se pudieron leer (fecha o código raro), las salteé.")
+
+    negociaciones = {cod: {"tiene": True, "items": items} for cod, items in clientes.items()}
+    print(f"   {len(negociaciones)} clientes con negociación vigente hoy ({filas_vencidas_o_futuras} filas vencidas o futuras, ignoradas).")
+    return negociaciones
 
 
 # ---------------------------------------------------------------------------
@@ -432,7 +546,10 @@ def top5_faltantes(combo_set_universo, combos_que_tiene, subcanal, pop_subcanal,
 DIA_LABEL = {"LU": "Lunes", "MA": "Martes", "MI": "Miércoles", "JU": "Jueves", "VI": "Viernes", "SA": "Sábado"}
 
 
-def construir_datos_por_ve(clientes_estructura, modelo, kpis):
+NEGOCIACION_VACIA = {"tiene": False, "items": []}
+
+
+def construir_datos_por_ve(clientes_estructura, modelo, kpis, negociaciones):
     por_ve = {}
     for cod, info in clientes_estructura.items():
         ve = info["ve"] or "SIN VE"
@@ -464,10 +581,7 @@ def construir_datos_por_ve(clientes_estructura, modelo, kpis):
             "canal": info.get("canal"),
             "dias": dias,
             "kpi": kpi_cliente,
-            # TODO: cablear con el Excel de negociaciones cuando Santiago lo mande
-            # (columnas esperadas: COD Cliente, tipo de negociacion). Por ahora
-            # todos quedan sin negociacion, no inventamos datos.
-            "negociacion": {"tiene": False, "tipo": None},
+            "negociacion": negociaciones.get(cod, NEGOCIACION_VACIA),
             # TODO: cablear con el historial mensual (arranca cuando Santiago
             # mande el Excel del año completo + se empiece a archivar mes a mes).
             # None = "sin datos", nunca inventar un valor.
@@ -562,9 +676,12 @@ if __name__ == "__main__":
         print(f"\n⚠️  {len(altas_nuevas)} clientes están en la base pero NO en Estructura (altas nuevas, no van a ningún VE):")
         print("   " + ", ".join(str(c) for c in sorted(altas_nuevas)))
 
+    ahora = datetime.now()
+    negociaciones = cargar_negociaciones(ahora)
+
     print("\n--- Armando reportes por vendedor ---")
     modelo = construir_modelo_kpi(registros, clientes_estructura, kpis)
-    por_ve = construir_datos_por_ve(clientes_estructura, modelo, kpis)
+    por_ve = construir_datos_por_ve(clientes_estructura, modelo, kpis, negociaciones)
 
     os.makedirs(CARPETA_SALIDA, exist_ok=True)
     plantilla_path = os.path.join(CARPETA, "plantilla.html")
@@ -573,7 +690,7 @@ if __name__ == "__main__":
     with open(plantilla_path, "r", encoding="utf-8") as f:
         plantilla = f.read()
 
-    fecha_hoy = datetime.now().strftime("%d/%m/%Y %H:%M")
+    fecha_hoy = ahora.strftime("%d/%m/%Y %H:%M")
     nombres_kpi = list(kpis.keys())
 
     generados = 0

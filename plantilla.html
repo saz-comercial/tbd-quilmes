@@ -45,8 +45,13 @@
 
   .detalle-neg{padding:16px 14px;}
   .detalle-neg .fc-sub{margin-bottom:14px;}
-  .detalle-tipo{background:#e8f0fe;color:var(--azul);border-radius:10px;padding:12px;font-size:14px;}
-  .detalle-tipo b{display:block;font-size:16px;margin-top:4px;}
+  .detalle-unidad{margin-bottom:16px;}
+  .detalle-unidad-titulo{font-size:12px;font-weight:700;color:var(--gris);text-transform:uppercase;
+                          letter-spacing:.03em;margin-bottom:6px;border-bottom:1px solid var(--borde);padding-bottom:4px;}
+  .detalle-linea{background:#e8f0fe;border-radius:10px;padding:10px 12px;margin-bottom:6px;}
+  .detalle-linea-nombre{font-size:12.5px;font-weight:600;color:var(--texto);margin-bottom:2px;}
+  .detalle-item{font-size:13.5px;color:var(--azul);font-weight:600;}
+  .detalle-item-sub{font-size:11.5px;color:var(--gris);font-weight:400;}
 
   .semana{display:flex;gap:6px;padding:10px 10px 4px;overflow-x:auto;}
   .dia-btn{flex:1 0 auto;min-width:52px;text-align:center;border:1px solid var(--borde);
@@ -262,16 +267,41 @@ function renderLista(){
   }).join("");
 }
 
+function formatoItemNegociacion(item){
+  if(item.tipo === "Sin cargo fijo"){
+    return `${item.tipo}: ${item.por_mes}/mes <span class="detalle-item-sub">(restan ${item.restante} de ${item.total} en la vigencia)</span>`;
+  }
+  return `${item.tipo}: ${item.valor_pct}%`;
+}
+
 function renderDetalle(){
   const c = DATOS.clientes.find(x => x.cod === clienteDetalleCod);
-  document.getElementById("detalle-contenido").innerHTML = c ? `
+  const cont = document.getElementById("detalle-contenido");
+  if(!c){ cont.innerHTML = ""; return; }
+
+  const items = c.negociacion.items || [];
+  const porUnidad = {};
+  items.forEach(item => {
+    (porUnidad[item.unidad] = porUnidad[item.unidad] || []).push(item);
+  });
+
+  const bloques = Object.keys(porUnidad).sort().map(unidad => `
+    <div class="detalle-unidad">
+      <div class="detalle-unidad-titulo">${unidad}</div>
+      ${porUnidad[unidad].map(item => `
+        <div class="detalle-linea">
+          <div class="detalle-linea-nombre">${item.linea}</div>
+          <div class="detalle-item">${formatoItemNegociacion(item)}</div>
+        </div>
+      `).join("")}
+    </div>
+  `).join("");
+
+  cont.innerHTML = `
     <div class="fc-nombre" style="font-size:16px">${c.nombre}</div>
     <div class="fc-sub">Cód. ${c.cod} · ${c.canal || "Sin canal"}</div>
-    <div class="detalle-tipo">
-      Tipo de negociación
-      <b>${c.negociacion.tipo || "Sin especificar"}</b>
-    </div>
-  ` : "";
+    ${bloques || '<div class="vacio">Sin negociaciones vigentes.</div>'}
+  `;
 }
 
 function renderKpis(){
