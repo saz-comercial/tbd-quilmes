@@ -18,9 +18,35 @@
   header h1{font-size:16px;margin:0;font-weight:600;}
   header .sub{font-size:12px;opacity:.85;margin-top:2px;}
 
-  .ccc{margin:10px 10px 0;padding:8px 12px;background:#e8f0fe;border:1px solid #c6dafc;
-       border-radius:10px;font-size:12.5px;color:#1a56db;display:flex;justify-content:space-between;align-items:center;}
-  .ccc b{font-size:15px;}
+  .ccc-grupo{padding:10px 10px 0;}
+  .ccc-titulo{font-size:11px;color:var(--gris);text-transform:uppercase;letter-spacing:.03em;margin:8px 2px 4px;}
+  .ccc-titulo:first-child{margin-top:0;}
+  .ccc-par{display:flex;gap:8px;}
+  .ccc-btn{flex:1;padding:12px 6px;border-radius:10px;text-align:center;cursor:pointer;border:1px solid transparent;}
+  .ccc-btn .n{display:block;font-size:20px;font-weight:800;line-height:1.1;}
+  .ccc-btn .lbl{font-size:11px;font-weight:600;}
+  .ccc-btn.si{background:var(--verde-bg);color:var(--verde);}
+  .ccc-btn.no{background:var(--rojo-bg);color:var(--rojo);}
+
+  .vista-header{display:flex;align-items:center;gap:10px;padding:12px 10px;background:#fff;
+                border-bottom:1px solid var(--borde);position:sticky;top:56px;z-index:15;}
+  .btn-volver{background:var(--gris-claro);border:none;border-radius:8px;padding:8px 12px;
+              font-size:13px;cursor:pointer;font-weight:600;white-space:nowrap;}
+  .vista-titulo{font-size:14px;font-weight:700;}
+
+  .lista-clientes{padding:8px 10px;}
+  .fila-cliente{display:flex;justify-content:space-between;align-items:center;gap:8px;
+                padding:10px;border:1px solid var(--borde);border-radius:10px;margin-bottom:6px;background:#fff;}
+  .fila-cliente.tiene-neg{border-left:4px solid var(--azul);cursor:pointer;}
+  .fc-nombre{font-size:13.5px;font-weight:600;}
+  .fc-sub{font-size:11px;color:var(--gris);margin-top:1px;}
+  .fc-badge{font-size:11px;padding:3px 8px;border-radius:8px;background:var(--gris-claro);color:var(--gris);white-space:nowrap;}
+  .fc-badge.si{background:#e8f0fe;color:var(--azul);}
+
+  .detalle-neg{padding:16px 14px;}
+  .detalle-neg .fc-sub{margin-bottom:14px;}
+  .detalle-tipo{background:#e8f0fe;color:var(--azul);border-radius:10px;padding:12px;font-size:14px;}
+  .detalle-tipo b{display:block;font-size:16px;margin-top:4px;}
 
   .semana{display:flex;gap:6px;padding:10px 10px 4px;overflow-x:auto;}
   .dia-btn{flex:1 0 auto;min-width:52px;text-align:center;border:1px solid var(--borde);
@@ -88,17 +114,34 @@
   <div class="sub">Datos al __FECHA__</div>
 </header>
 
-<div class="ccc" id="ccc"></div>
-<div class="semana" id="semana"></div>
-<div class="kpis" id="kpis"></div>
-<div class="buscador"><input id="buscador" type="text" placeholder="Buscar cliente por nombre o código..."></div>
-<div class="resumen" id="resumen"></div>
-<div class="acciones">
-  <button class="btn-copiar" id="btnCopiar">Copiar resumen</button>
-  <button class="btn-wsp" id="btnWsp">Enviar por WhatsApp</button>
+<div id="vista-dashboard">
+  <div class="ccc-grupo" id="ccc-botones"></div>
+  <div class="semana" id="semana"></div>
+  <div class="kpis" id="kpis"></div>
+  <div class="buscador"><input id="buscador" type="text" placeholder="Buscar cliente por nombre o código..."></div>
+  <div class="resumen" id="resumen"></div>
+  <div class="acciones">
+    <button class="btn-copiar" id="btnCopiar">Copiar resumen</button>
+    <button class="btn-wsp" id="btnWsp">Enviar por WhatsApp</button>
+  </div>
+  <div id="listado"></div>
 </div>
 
-<div id="listado"></div>
+<div id="vista-lista" style="display:none">
+  <div class="vista-header">
+    <button class="btn-volver" onclick="volver()">← Volver</button>
+    <div class="vista-titulo" id="lista-titulo"></div>
+  </div>
+  <div class="lista-clientes" id="lista-clientes"></div>
+</div>
+
+<div id="vista-detalle" style="display:none">
+  <div class="vista-header">
+    <button class="btn-volver" onclick="volver()">← Volver</button>
+    <div class="vista-titulo">Negociación</div>
+  </div>
+  <div class="detalle-neg" id="detalle-contenido"></div>
+</div>
 
 <script>
 window.DATOS = __DATOS_JSON__;
@@ -109,6 +152,47 @@ const DIA_LABEL = {LU:"Lunes", MA:"Martes", MI:"Miércoles", JU:"Jueves", VI:"Vi
 let kpiActual = DATOS.kpis[0];
 let diaFiltro = null;
 let busqueda = "";
+
+// --- navegación de vistas (dashboard / lista de clientes / detalle de negociación) ---
+let vista = "dashboard";
+let listaActual = [];
+let listaTitulo = "";
+let listaMostrarRecencia = false;
+let clienteDetalleCod = null;
+
+const GRUPOS_CCC = {
+  CCC_CVZ: {titulo: "CCC CVZ · con compra de cerveza", filtro: c => c.kpi["TBD CZA"].tiene > 0, recencia: false},
+  CNC_CVZ: {titulo: "CNC CVZ · sin compra de cerveza", filtro: c => c.kpi["TBD CZA"].tiene === 0, recencia: true},
+  CCC_UNG: {titulo: "CCC UNG · con compra de UNG/gaseosa", filtro: c => c.kpi["TBD UNG + AGUA"].tiene > 0, recencia: false},
+  CNC_UNG: {titulo: "CNC UNG · sin compra de UNG/gaseosa", filtro: c => c.kpi["TBD UNG + AGUA"].tiene === 0, recencia: true},
+};
+
+function irALista(tipo){
+  const spec = GRUPOS_CCC[tipo];
+  listaActual = DATOS.clientes.filter(spec.filtro).slice().sort((a, b) =>
+    (b.negociacion.tiene - a.negociacion.tiene) || a.nombre.localeCompare(b.nombre)
+  );
+  listaTitulo = spec.titulo;
+  listaMostrarRecencia = spec.recencia;
+  vista = "lista";
+  renderTodo();
+  window.scrollTo(0, 0);
+}
+
+function irADetalle(cod){
+  const c = DATOS.clientes.find(x => x.cod === cod);
+  if(!c || !c.negociacion.tiene) return;
+  clienteDetalleCod = cod;
+  vista = "detalle";
+  renderTodo();
+  window.scrollTo(0, 0);
+}
+
+function volver(){
+  vista = (vista === "detalle") ? "lista" : "dashboard";
+  renderTodo();
+  window.scrollTo(0, 0);
+}
 
 function clientesDelDia(dia){
   return DATOS.clientes.filter(c => c.dias.includes(dia));
@@ -134,10 +218,60 @@ function renderSemana(){
   });
 }
 
-function renderCcc(){
-  const c = DATOS.ccc;
-  document.getElementById("ccc").innerHTML =
-    `<span>CCC · clientes con compra de cerveza</span><b>${c.con_compra} / ${c.total}</b>`;
+function renderCccBotones(){
+  const cvzSi = DATOS.clientes.filter(GRUPOS_CCC.CCC_CVZ.filtro).length;
+  const cvzNo = DATOS.clientes.length - cvzSi;
+  const ungSi = DATOS.clientes.filter(GRUPOS_CCC.CCC_UNG.filtro).length;
+  const ungNo = DATOS.clientes.length - ungSi;
+  document.getElementById("ccc-botones").innerHTML = `
+    <div class="ccc-titulo">Cerveza</div>
+    <div class="ccc-par">
+      <div class="ccc-btn si" onclick="irALista('CCC_CVZ')"><span class="n">${cvzSi}</span><span class="lbl">CCC CVZ</span></div>
+      <div class="ccc-btn no" onclick="irALista('CNC_CVZ')"><span class="n">${cvzNo}</span><span class="lbl">CNC CVZ</span></div>
+    </div>
+    <div class="ccc-titulo">UNG / gaseosas</div>
+    <div class="ccc-par">
+      <div class="ccc-btn si" onclick="irALista('CCC_UNG')"><span class="n">${ungSi}</span><span class="lbl">CCC UNG</span></div>
+      <div class="ccc-btn no" onclick="irALista('CNC_UNG')"><span class="n">${ungNo}</span><span class="lbl">CNC UNG</span></div>
+    </div>
+  `;
+}
+
+function renderLista(){
+  document.getElementById("lista-titulo").textContent = listaTitulo;
+  const cont = document.getElementById("lista-clientes");
+  if(!listaActual.length){
+    cont.innerHTML = `<div class="vacio">No hay clientes en este grupo.</div>`;
+    return;
+  }
+  cont.innerHTML = listaActual.map(c => {
+    const neg = c.negociacion.tiene;
+    const recenciaLinea = listaMostrarRecencia
+      ? `<div class="fc-sub">Última compra: ${c.recencia || "sin datos"}</div>`
+      : "";
+    return `
+      <div class="fila-cliente ${neg ? "tiene-neg" : ""}" ${neg ? `onclick="irADetalle(${c.cod})"` : ""}>
+        <div>
+          <div class="fc-nombre">${c.nombre}</div>
+          <div class="fc-sub">Cód. ${c.cod} · ${c.canal || "Sin canal"}</div>
+          ${recenciaLinea}
+        </div>
+        <div class="fc-badge ${neg ? "si" : ""}">${neg ? "Negociación" : "Sin negoc."}</div>
+      </div>
+    `;
+  }).join("");
+}
+
+function renderDetalle(){
+  const c = DATOS.clientes.find(x => x.cod === clienteDetalleCod);
+  document.getElementById("detalle-contenido").innerHTML = c ? `
+    <div class="fc-nombre" style="font-size:16px">${c.nombre}</div>
+    <div class="fc-sub">Cód. ${c.cod} · ${c.canal || "Sin canal"}</div>
+    <div class="detalle-tipo">
+      Tipo de negociación
+      <b>${c.negociacion.tipo || "Sin especificar"}</b>
+    </div>
+  ` : "";
 }
 
 function renderKpis(){
@@ -274,11 +408,21 @@ document.getElementById("buscador").addEventListener("input", (e) => {
 });
 
 function renderTodo(){
-  renderCcc();
-  renderSemana();
-  renderKpis();
-  renderResumen();
-  renderListado();
+  document.getElementById("vista-dashboard").style.display = (vista === "dashboard") ? "" : "none";
+  document.getElementById("vista-lista").style.display = (vista === "lista") ? "" : "none";
+  document.getElementById("vista-detalle").style.display = (vista === "detalle") ? "" : "none";
+
+  if(vista === "dashboard"){
+    renderCccBotones();
+    renderSemana();
+    renderKpis();
+    renderResumen();
+    renderListado();
+  } else if(vista === "lista"){
+    renderLista();
+  } else if(vista === "detalle"){
+    renderDetalle();
+  }
 }
 
 renderTodo();

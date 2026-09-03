@@ -235,6 +235,7 @@ def cargar_estructura(ws_estructura):
             "cod": cod,
             "razon_social": norm(r[idx["Razon Social"]]) or f"Cliente {cod}",
             "subcanal_estructura": norm(r[idx["SubCanal MKT"]]),
+            "canal": norm(r[idx["Canal"]]),
             "ve": norm(r[idx["VE"]]),
             "frec_ve": norm(r[idx["FREC VE"]]),
         }
@@ -460,8 +461,17 @@ def construir_datos_por_ve(clientes_estructura, modelo, kpis):
         cliente_final = {
             "cod": cod,
             "nombre": titulo(info["razon_social"]),
+            "canal": info.get("canal"),
             "dias": dias,
             "kpi": kpi_cliente,
+            # TODO: cablear con el Excel de negociaciones cuando Santiago lo mande
+            # (columnas esperadas: COD Cliente, tipo de negociacion). Por ahora
+            # todos quedan sin negociacion, no inventamos datos.
+            "negociacion": {"tiene": False, "tipo": None},
+            # TODO: cablear con el historial mensual (arranca cuando Santiago
+            # mande el Excel del año completo + se empiece a archivar mes a mes).
+            # None = "sin datos", nunca inventar un valor.
+            "recencia": None,
         }
         por_ve.setdefault(ve, []).append(cliente_final)
 
