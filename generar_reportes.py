@@ -193,110 +193,125 @@ def _cargar_negociaciones_xls_legacy(path, hoy):
     return negociaciones
 
 
-COLUMNAS_HISTORICO_REQUERIDAS = ["Año Mes Cierre", "COD Cliente", "DSC Negocio"]
-
-
-def _calcular_recencia(ws_historico, negocio_map, hoy):
+def cargar_negociaciones(hoy):
     """
-    Recorre la hoja histórica (muchos meses) y para cada cliente guarda el
-    último Año Mes Cierre en que compró cerveza y en que compró UNG/AGUAS.
-    Devuelve {cod: etiqueta} para cerveza y para UNG, por separado.
-    Etiquetas: "UM", "U2M", "U3M", "U4M".."U6M", "+6", o
-    "Sin compras en el histórico" si el cliente nunca aparece.
+    Archivo de negociaciones, independiente del histórico (se actualiza
+    solo, cada tanto — como Estructura). Puede venir como .xlsx con una hoja
+    'NEGOCIACIONES' (con o sin otras hojas al lado), o como el .xls viejo
+    (texto UTF-16 separado por tabs). No es obligatorio: si todavía no lo
+    subieron, seguimos sin negociaciones en vez de frenar todo.
     """
-    filas = ws_historico.iter_rows(min_row=1, values_only=True)
-    header = next(filas)
-    idx = {h: i for i, h in enumerate(header) if h is not None}
-    faltantes = [c for c in COLUMNAS_HISTORICO_REQUERIDAS if c not in idx]
-    if faltantes:
-        error_fatal("A la hoja histórica del archivo ONLINE le faltan estas columnas: " + ", ".join(faltantes))
-
-    ultimo_mes_cerveza = {}
-    ultimo_mes_ung = {}
-    filas_leidas = 0
-
-    for r in filas:
-        cod = r[idx["COD Cliente"]]
-        anio_mes = r[idx["Año Mes Cierre"]]
-        if cod is None or anio_mes is None:
-            continue
-        filas_leidas += 1
-        negocio = norm(r[idx["DSC Negocio"]])
-        agrup = negocio_map.get(negocio)
-        if agrup == "CERVEZA":
-            if cod not in ultimo_mes_cerveza or anio_mes > ultimo_mes_cerveza[cod]:
-                ultimo_mes_cerveza[cod] = anio_mes
-        elif agrup in ("UNG", "AGUAS"):
-            if cod not in ultimo_mes_ung or anio_mes > ultimo_mes_ung[cod]:
-                ultimo_mes_ung[cod] = anio_mes
-
-    def etiqueta(anio_mes_ultimo):
-        if anio_mes_ultimo is None:
-            return "Sin compras en el histórico"
-        ay, am = divmod(int(hoy.strftime("%Y%m")), 100)
-        uy, um = divmod(int(anio_mes_ultimo), 100)
-        meses = (ay - uy) * 12 + (am - um)
-        if meses <= 0:
-            return None  # compró este mismo mes: no debería estar en la lista CNC
-        if meses == 1:
-            return "UM"
-        if meses == 2:
-            return "U2M"
-        if meses == 3:
-            return "U3M"
-        if meses <= 6:
-            return f"U{meses}M"
-        return "+6"
-
-    rec_cerveza = {cod: etiqueta(m) for cod, m in ultimo_mes_cerveza.items()}
-    rec_ung = {cod: etiqueta(m) for cod, m in ultimo_mes_ung.items()}
-    print(f"   Histórico: {filas_leidas} filas, {len(ultimo_mes_cerveza)} clientes con historial de cerveza, {len(ultimo_mes_ung)} con historial de UNG/AGUAS.")
-    return rec_cerveza, rec_ung
-
-
-def cargar_negociaciones_y_recencia(hoy, negocio_map):
-    """
-    Formato nuevo: un solo .xlsx ('TBD+ONLINE 2026.xlsx') con hoja
-    'NEGOCIACIONES' + una hoja de histórico de ventas (varios meses).
-    Si no lo encuentra, cae al .xls viejo (solo negociaciones, sin recencia).
-    Nada de esto es obligatorio: si no hay archivo todavía, seguimos con
-    negociaciones vacías y recencia sin datos, sin frenar el resto.
-
-    Devuelve (negociaciones, recencia_cerveza, recencia_ung).
-    """
-    path_xlsx = buscar_archivo_mas_nuevo("*ONLINE*.xlsx")
+    path_xlsx = buscar_archivo_mas_nuevo("*ONLINE*.xlsx") or buscar_archivo_mas_nuevo("*egociac*.xlsx")
     if path_xlsx:
-        print(f"📄 Negociaciones + histórico: {os.path.basename(path_xlsx)}")
+        print(f"📄 Negociaciones: {os.path.basename(path_xlsx)}")
         wb = openpyxl.load_workbook(path_xlsx, read_only=True, data_only=True)
-        hoja_neg = next((h for h in wb.sheetnames if h.strip().upper() == "NEGOCIACIONES"), None)
-        if not hoja_neg:
-            error_fatal(f"El archivo ONLINE no tiene una hoja llamada 'NEGOCIACIONES'. Hojas encontradas: {wb.sheetnames}")
-        otras_hojas = [h for h in wb.sheetnames if h != hoja_neg]
-        if len(otras_hojas) != 1:
-            error_fatal(f"Esperaba 2 hojas en el archivo ONLINE (negociaciones + histórico), encontré: {wb.sheetnames}")
-        hoja_historico = otras_hojas[0]
-
+        hoja_neg = next((h for h in wb.sheetnames if h.strip().upper() == "NEGOCIACIONES"), wb.sheetnames[0])
         filas_neg = list(wb[hoja_neg].iter_rows(min_row=1, values_only=True))
         if not filas_neg:
-            error_fatal("La hoja NEGOCIACIONES está vacía.")
+            error_fatal("La hoja de negociaciones está vacía.")
         idx_neg = {_txt(h): i for i, h in enumerate(filas_neg[0])}
-        _validar_columnas_negociacion(idx_neg, "la hoja NEGOCIACIONES")
+        _validar_columnas_negociacion(idx_neg, "el archivo de negociaciones")
         negociaciones, vencidas, con_error = _procesar_filas_negociacion(filas_neg[1:], idx_neg, hoy)
         if con_error:
-            print(f"   ⚠️  {con_error} filas de NEGOCIACIONES no se pudieron leer (fecha o código raro), las salteé.")
+            print(f"   ⚠️  {con_error} filas de negociaciones no se pudieron leer (fecha o código raro), las salteé.")
         print(f"   {len(negociaciones)} clientes con negociación vigente hoy ({vencidas} filas vencidas o futuras, ignoradas).")
-
-        rec_cerveza, rec_ung = _calcular_recencia(wb[hoja_historico], negocio_map, hoy)
-        return negociaciones, rec_cerveza, rec_ung
+        return negociaciones
 
     path_xls = buscar_archivo_mas_nuevo("*ONLINE*.xls") or buscar_archivo_mas_nuevo("*egociac*.xls")
     if path_xls:
-        print(f"📄 Negociaciones (formato viejo, sin histórico): {os.path.basename(path_xls)}")
-        negociaciones = _cargar_negociaciones_xls_legacy(path_xls, hoy)
-        return negociaciones, {}, {}
+        print(f"📄 Negociaciones (formato viejo): {os.path.basename(path_xls)}")
+        return _cargar_negociaciones_xls_legacy(path_xls, hoy)
 
-    print("\nℹ️  No encontré el archivo de negociaciones/histórico (algo como 'TBD+ONLINE 2026.xlsx'). Sigo sin negociaciones ni recencia por ahora.")
-    return {}, {}, {}
+    print("\nℹ️  No encontré el archivo de negociaciones. Sigo sin negociaciones por ahora.")
+    return {}
+
+
+# ---------------------------------------------------------------------------
+# Historial de compras (para la recencia de los CNC): en vez de pedirle a
+# Santiago el año completo cada vez, guardamos un archivito chico persistente
+# con "el último mes en que cada cliente compró cerveza / UNG+AGUAS", y lo
+# vamos actualizando solos con el Base Santi de cada día. Una sola vez (ya
+# hecho) se sembró con el histórico completo que mandó Santiago.
+# ---------------------------------------------------------------------------
+
+NOMBRE_HISTORIAL = "historial_compras.csv"
+CATEGORIAS_HISTORIAL = ("CERVEZA", "UNG_AGUAS")
+
+
+def cargar_historial_persistido():
+    """{(cod, categoria): ultimo_anio_mes}. Si no existe el archivo todavía, vacío."""
+    path = os.path.join(CARPETA, NOMBRE_HISTORIAL)
+    historial = {}
+    if not os.path.exists(path):
+        print(f"\nℹ️  Todavía no existe {NOMBRE_HISTORIAL} (primera vez). Arranca vacío.")
+        return historial
+    with open(path, newline="", encoding="utf-8") as f:
+        for fila in csv.DictReader(f):
+            try:
+                cod = int(fila["cod_cliente"])
+                categoria = fila["categoria"]
+                anio_mes = int(fila["ultimo_anio_mes"])
+            except (KeyError, ValueError):
+                continue
+            if categoria in CATEGORIAS_HISTORIAL:
+                historial[(cod, categoria)] = anio_mes
+    print(f"📄 {NOMBRE_HISTORIAL}: {len(historial)} pares cliente+categoría cargados.")
+    return historial
+
+
+def actualizar_historial_con_hoy(historial, registros, anio_mes_hoy):
+    """Pisa en 'historial' el mes de hoy para todo cliente que compró esa
+    categoría según el Base Santi de hoy. Modifica 'historial' in-place y
+    también lo devuelve, por comodidad."""
+    for r in registros:
+        if r["negocio_agrup"] == "CERVEZA":
+            historial[(r["cod_cliente"], "CERVEZA")] = anio_mes_hoy
+        elif r["negocio_agrup"] in ("UNG", "AGUAS"):
+            historial[(r["cod_cliente"], "UNG_AGUAS")] = anio_mes_hoy
+    return historial
+
+
+def guardar_historial(historial):
+    path = os.path.join(CARPETA, NOMBRE_HISTORIAL)
+    with open(path, "w", newline="", encoding="utf-8") as f:
+        w = csv.writer(f)
+        w.writerow(["cod_cliente", "categoria", "ultimo_anio_mes"])
+        for (cod, categoria), anio_mes in sorted(historial.items()):
+            w.writerow([cod, categoria, anio_mes])
+    print(f"   Guardé {NOMBRE_HISTORIAL} con {len(historial)} pares cliente+categoría.")
+
+
+def _etiqueta_recencia(anio_mes_hoy, anio_mes_ultimo):
+    if anio_mes_ultimo is None:
+        return "Sin compras en el histórico"
+    ay, am = divmod(anio_mes_hoy, 100)
+    uy, um = divmod(anio_mes_ultimo, 100)
+    meses = (ay - uy) * 12 + (am - um)
+    if meses <= 0:
+        return None  # compró este mismo mes: no debería estar en la lista CNC
+    if meses == 1:
+        return "UM"
+    if meses == 2:
+        return "U2M"
+    if meses == 3:
+        return "U3M"
+    if meses <= 6:
+        return f"U{meses}M"
+    return "+6"
+
+
+def calcular_recencia(historial, anio_mes_hoy):
+    """A partir de {(cod, categoria): ultimo_anio_mes}, arma {cod: etiqueta}
+    para cerveza y para UNG+AGUAS por separado."""
+    rec_cerveza = {}
+    rec_ung = {}
+    for (cod, categoria), anio_mes in historial.items():
+        etiqueta = _etiqueta_recencia(anio_mes_hoy, anio_mes)
+        if categoria == "CERVEZA":
+            rec_cerveza[cod] = etiqueta
+        else:
+            rec_ung[cod] = etiqueta
+    return rec_cerveza, rec_ung
 
 
 # ---------------------------------------------------------------------------
@@ -368,6 +383,7 @@ def cargar_base(ws_base, marca_map, calibre_map, negocio_map):
     registros = []
     for r in filas_dato:
         cod_cliente = r[idx["COD Cliente"]]
+        anio_mes = r[idx["Año Mes Cierre"]]
         dsc_marca = norm(r[idx["DSC Marca"]])
         dsc_calibre = norm(r[idx["DSC Calibre"]])
         dsc_familia = norm(r[idx["DSC Familia"]])
@@ -394,6 +410,7 @@ def cargar_base(ws_base, marca_map, calibre_map, negocio_map):
 
         registros.append({
             "cod_cliente": cod_cliente,
+            "anio_mes": anio_mes,
             "dsc_marca": dsc_marca,
             "dsc_calibre": dsc_calibre,
             "dsc_familia": dsc_familia,
@@ -778,7 +795,14 @@ if __name__ == "__main__":
         print("   " + ", ".join(str(c) for c in sorted(altas_nuevas)))
 
     ahora = datetime.now()
-    negociaciones, rec_cerveza, rec_ung = cargar_negociaciones_y_recencia(ahora, negocio_map)
+    negociaciones = cargar_negociaciones(ahora)
+
+    anios_mes_presentes = [r["anio_mes"] for r in registros if r["anio_mes"] is not None]
+    anio_mes_hoy = max(anios_mes_presentes) if anios_mes_presentes else int(ahora.strftime("%Y%m"))
+    historial = cargar_historial_persistido()
+    historial = actualizar_historial_con_hoy(historial, registros, anio_mes_hoy)
+    guardar_historial(historial)
+    rec_cerveza, rec_ung = calcular_recencia(historial, anio_mes_hoy)
 
     print("\n--- Armando reportes por vendedor ---")
     modelo = construir_modelo_kpi(registros, clientes_estructura, kpis)
