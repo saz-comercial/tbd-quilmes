@@ -99,46 +99,16 @@ def meses_entre(desde, hasta):
     return max(1, (hasta.year - desde.year) * 12 + (hasta.month - desde.month))
 
 
-def cargar_negociaciones(hoy):
+def _txt(v):
+    return "" if v is None else str(v).strip()
+
+
+def _procesar_filas_negociacion(filas, idx, hoy):
     """
-    Busca el archivo de negociaciones (tipo 'TBD+ONLINE 2026.xls' — en
-    realidad texto separado por tabs en UTF-16, no un Excel de verdad).
-    No es obligatorio: si todavía no lo subieron, seguimos sin negociaciones
-    en vez de frenar todo el proceso (a diferencia de base/Estructura).
-
-    Devuelve {cod_cliente: {"tiene": bool, "items": [...]}}.
+    Lógica compartida para leer las filas de la hoja/archivo de negociaciones,
+    sea que vengan de un csv (strings) o de openpyxl (mezcla de int/str).
+    Devuelve (negociaciones, filas_vencidas_o_futuras, filas_con_error).
     """
-    path = (
-        buscar_archivo_mas_nuevo("*ONLINE*.xls")
-        or buscar_archivo_mas_nuevo("*ONLINE*.xlsx")
-        or buscar_archivo_mas_nuevo("*egociac*.xls")
-        or buscar_archivo_mas_nuevo("*egociac*.xlsx")
-    )
-    if not path:
-        print("\nℹ️  No encontré el archivo de negociaciones (algo como 'TBD+ONLINE 2026.xls'). Sigo sin negociaciones por ahora.")
-        return {}
-
-    print(f"📄 Negociaciones: {os.path.basename(path)}")
-
-    # Es texto UTF-16 separado por tabs, aunque tenga extensión .xls/.xlsx.
-    try:
-        with open(path, encoding="utf-16", newline="") as f:
-            filas = list(csv.reader(f, delimiter="\t"))
-    except (UnicodeError, UnicodeDecodeError):
-        error_fatal(
-            "El archivo de negociaciones no es el formato de texto (UTF-16 con tabs) que esperaba. "
-            "¿Cambió el formato de exportación? Avisame antes de que siga."
-        )
-
-    if not filas:
-        error_fatal("El archivo de negociaciones está vacío.")
-
-    header = filas[0]
-    idx = {h.strip(): i for i, h in enumerate(header)}
-    faltantes = [c for c in COLUMNAS_NEGOCIACIONES_REQUERIDAS if c not in idx]
-    if faltantes:
-        error_fatal("Al archivo de negociaciones le faltan estas columnas: " + ", ".join(faltantes))
-
     clientes = {}
     filas_vencidas_o_futuras = 0
     filas_con_error = 0
@@ -148,13 +118,13 @@ def cargar_negociaciones(hoy):
         ("Sin cargo variable", idx["Sin cargo variable"]),
     ]
 
-    for fila in filas[1:]:
-        if not fila or not fila[idx["Cliente código"]].strip():
+    for fila in filas:
+        if not fila or not _txt(fila[idx["Cliente código"]]):
             continue
         try:
-            cod = int(fila[idx["Cliente código"]].strip())
-            desde = datetime.strptime(fila[idx["Vigencia desde"]].strip(), "%d/%m/%Y")
-            hasta = datetime.strptime(fila[idx["Vigencia hasta"]].strip(), "%d/%m/%Y")
+            cod = int(_txt(fila[idx["Cliente código"]]))
+            desde = datetime.strptime(_txt(fila[idx["Vigencia desde"]]), "%d/%m/%Y")
+            hasta = datetime.strptime(_txt(fila[idx["Vigencia hasta"]]), "%d/%m/%Y")
         except (ValueError, IndexError):
             filas_con_error += 1
             continue
@@ -168,9 +138,9 @@ def cargar_negociaciones(hoy):
         linea = norm(fila[idx["Linea de pricing nombre"]])
 
         for tipo_nombre, col in tipos:
-            crudo = fila[col].strip().replace(",", ".")
+            crudo = _txt(fila[col]).replace(",", ".")
             try:
-                valor = float(crudo)
+                valor = float(crudo) if crudo else 0.0
             except ValueError:
                 valor = 0.0
             if valor == 0.0:
@@ -191,12 +161,142 @@ def cargar_negociaciones(hoy):
 
             clientes.setdefault(cod, []).append(item)
 
-    if filas_con_error:
-        print(f"   ⚠️  {filas_con_error} filas del archivo de negociaciones no se pudieron leer (fecha o código raro), las salteé.")
-
     negociaciones = {cod: {"tiene": True, "items": items} for cod, items in clientes.items()}
-    print(f"   {len(negociaciones)} clientes con negociación vigente hoy ({filas_vencidas_o_futuras} filas vencidas o futuras, ignoradas).")
+    return negociaciones, filas_vencidas_o_futuras, filas_con_error
+
+
+def _validar_columnas_negociacion(idx, origen):
+    faltantes = [c for c in COLUMNAS_NEGOCIACIONES_REQUERIDAS if c not in idx]
+    if faltantes:
+        error_fatal(f"A {origen} le faltan estas columnas: " + ", ".join(faltantes))
+
+
+def _cargar_negociaciones_xls_legacy(path, hoy):
+    """Formato viejo: archivo .xls que en realidad es texto UTF-16 separado por tabs."""
+    try:
+        with open(path, encoding="utf-16", newline="") as f:
+            filas = list(csv.reader(f, delimiter="\t"))
+    except (UnicodeError, UnicodeDecodeError):
+        error_fatal(
+            "El archivo de negociaciones no es el formato de texto (UTF-16 con tabs) que esperaba. "
+            "¿Cambió el formato de exportación? Avisame antes de que siga."
+        )
+    if not filas:
+        error_fatal("El archivo de negociaciones está vacío.")
+
+    idx = {h.strip(): i for i, h in enumerate(filas[0])}
+    _validar_columnas_negociacion(idx, "el archivo de negociaciones")
+    negociaciones, vencidas, con_error = _procesar_filas_negociacion(filas[1:], idx, hoy)
+    if con_error:
+        print(f"   ⚠️  {con_error} filas del archivo de negociaciones no se pudieron leer (fecha o código raro), las salteé.")
+    print(f"   {len(negociaciones)} clientes con negociación vigente hoy ({vencidas} filas vencidas o futuras, ignoradas).")
     return negociaciones
+
+
+COLUMNAS_HISTORICO_REQUERIDAS = ["Año Mes Cierre", "COD Cliente", "DSC Negocio"]
+
+
+def _calcular_recencia(ws_historico, negocio_map, hoy):
+    """
+    Recorre la hoja histórica (muchos meses) y para cada cliente guarda el
+    último Año Mes Cierre en que compró cerveza y en que compró UNG/AGUAS.
+    Devuelve {cod: etiqueta} para cerveza y para UNG, por separado.
+    Etiquetas: "UM", "U2M", "U3M", "U4M".."U6M", "+6", o
+    "Sin compras en el histórico" si el cliente nunca aparece.
+    """
+    filas = ws_historico.iter_rows(min_row=1, values_only=True)
+    header = next(filas)
+    idx = {h: i for i, h in enumerate(header) if h is not None}
+    faltantes = [c for c in COLUMNAS_HISTORICO_REQUERIDAS if c not in idx]
+    if faltantes:
+        error_fatal("A la hoja histórica del archivo ONLINE le faltan estas columnas: " + ", ".join(faltantes))
+
+    ultimo_mes_cerveza = {}
+    ultimo_mes_ung = {}
+    filas_leidas = 0
+
+    for r in filas:
+        cod = r[idx["COD Cliente"]]
+        anio_mes = r[idx["Año Mes Cierre"]]
+        if cod is None or anio_mes is None:
+            continue
+        filas_leidas += 1
+        negocio = norm(r[idx["DSC Negocio"]])
+        agrup = negocio_map.get(negocio)
+        if agrup == "CERVEZA":
+            if cod not in ultimo_mes_cerveza or anio_mes > ultimo_mes_cerveza[cod]:
+                ultimo_mes_cerveza[cod] = anio_mes
+        elif agrup in ("UNG", "AGUAS"):
+            if cod not in ultimo_mes_ung or anio_mes > ultimo_mes_ung[cod]:
+                ultimo_mes_ung[cod] = anio_mes
+
+    def etiqueta(anio_mes_ultimo):
+        if anio_mes_ultimo is None:
+            return "Sin compras en el histórico"
+        ay, am = divmod(int(hoy.strftime("%Y%m")), 100)
+        uy, um = divmod(int(anio_mes_ultimo), 100)
+        meses = (ay - uy) * 12 + (am - um)
+        if meses <= 0:
+            return None  # compró este mismo mes: no debería estar en la lista CNC
+        if meses == 1:
+            return "UM"
+        if meses == 2:
+            return "U2M"
+        if meses == 3:
+            return "U3M"
+        if meses <= 6:
+            return f"U{meses}M"
+        return "+6"
+
+    rec_cerveza = {cod: etiqueta(m) for cod, m in ultimo_mes_cerveza.items()}
+    rec_ung = {cod: etiqueta(m) for cod, m in ultimo_mes_ung.items()}
+    print(f"   Histórico: {filas_leidas} filas, {len(ultimo_mes_cerveza)} clientes con historial de cerveza, {len(ultimo_mes_ung)} con historial de UNG/AGUAS.")
+    return rec_cerveza, rec_ung
+
+
+def cargar_negociaciones_y_recencia(hoy, negocio_map):
+    """
+    Formato nuevo: un solo .xlsx ('TBD+ONLINE 2026.xlsx') con hoja
+    'NEGOCIACIONES' + una hoja de histórico de ventas (varios meses).
+    Si no lo encuentra, cae al .xls viejo (solo negociaciones, sin recencia).
+    Nada de esto es obligatorio: si no hay archivo todavía, seguimos con
+    negociaciones vacías y recencia sin datos, sin frenar el resto.
+
+    Devuelve (negociaciones, recencia_cerveza, recencia_ung).
+    """
+    path_xlsx = buscar_archivo_mas_nuevo("*ONLINE*.xlsx")
+    if path_xlsx:
+        print(f"📄 Negociaciones + histórico: {os.path.basename(path_xlsx)}")
+        wb = openpyxl.load_workbook(path_xlsx, read_only=True, data_only=True)
+        hoja_neg = next((h for h in wb.sheetnames if h.strip().upper() == "NEGOCIACIONES"), None)
+        if not hoja_neg:
+            error_fatal(f"El archivo ONLINE no tiene una hoja llamada 'NEGOCIACIONES'. Hojas encontradas: {wb.sheetnames}")
+        otras_hojas = [h for h in wb.sheetnames if h != hoja_neg]
+        if len(otras_hojas) != 1:
+            error_fatal(f"Esperaba 2 hojas en el archivo ONLINE (negociaciones + histórico), encontré: {wb.sheetnames}")
+        hoja_historico = otras_hojas[0]
+
+        filas_neg = list(wb[hoja_neg].iter_rows(min_row=1, values_only=True))
+        if not filas_neg:
+            error_fatal("La hoja NEGOCIACIONES está vacía.")
+        idx_neg = {_txt(h): i for i, h in enumerate(filas_neg[0])}
+        _validar_columnas_negociacion(idx_neg, "la hoja NEGOCIACIONES")
+        negociaciones, vencidas, con_error = _procesar_filas_negociacion(filas_neg[1:], idx_neg, hoy)
+        if con_error:
+            print(f"   ⚠️  {con_error} filas de NEGOCIACIONES no se pudieron leer (fecha o código raro), las salteé.")
+        print(f"   {len(negociaciones)} clientes con negociación vigente hoy ({vencidas} filas vencidas o futuras, ignoradas).")
+
+        rec_cerveza, rec_ung = _calcular_recencia(wb[hoja_historico], negocio_map, hoy)
+        return negociaciones, rec_cerveza, rec_ung
+
+    path_xls = buscar_archivo_mas_nuevo("*ONLINE*.xls") or buscar_archivo_mas_nuevo("*egociac*.xls")
+    if path_xls:
+        print(f"📄 Negociaciones (formato viejo, sin histórico): {os.path.basename(path_xls)}")
+        negociaciones = _cargar_negociaciones_xls_legacy(path_xls, hoy)
+        return negociaciones, {}, {}
+
+    print("\nℹ️  No encontré el archivo de negociaciones/histórico (algo como 'TBD+ONLINE 2026.xlsx'). Sigo sin negociaciones ni recencia por ahora.")
+    return {}, {}, {}
 
 
 # ---------------------------------------------------------------------------
@@ -549,7 +649,7 @@ DIA_LABEL = {"LU": "Lunes", "MA": "Martes", "MI": "Miércoles", "JU": "Jueves", 
 NEGOCIACION_VACIA = {"tiene": False, "items": []}
 
 
-def construir_datos_por_ve(clientes_estructura, modelo, kpis, negociaciones):
+def construir_datos_por_ve(clientes_estructura, modelo, kpis, negociaciones, rec_cerveza, rec_ung):
     por_ve = {}
     for cod, info in clientes_estructura.items():
         ve = info["ve"] or "SIN VE"
@@ -582,10 +682,11 @@ def construir_datos_por_ve(clientes_estructura, modelo, kpis, negociaciones):
             "dias": dias,
             "kpi": kpi_cliente,
             "negociacion": negociaciones.get(cod, NEGOCIACION_VACIA),
-            # TODO: cablear con el historial mensual (arranca cuando Santiago
-            # mande el Excel del año completo + se empiece a archivar mes a mes).
-            # None = "sin datos", nunca inventar un valor.
-            "recencia": None,
+            # None = sin datos (no hay histórico cargado todavía), nunca inventar un valor.
+            "recencia": {
+                "cerveza": rec_cerveza.get(cod, "Sin compras en el histórico" if rec_cerveza else None),
+                "ung": rec_ung.get(cod, "Sin compras en el histórico" if rec_ung else None),
+            },
         }
         por_ve.setdefault(ve, []).append(cliente_final)
 
@@ -677,11 +778,11 @@ if __name__ == "__main__":
         print("   " + ", ".join(str(c) for c in sorted(altas_nuevas)))
 
     ahora = datetime.now()
-    negociaciones = cargar_negociaciones(ahora)
+    negociaciones, rec_cerveza, rec_ung = cargar_negociaciones_y_recencia(ahora, negocio_map)
 
     print("\n--- Armando reportes por vendedor ---")
     modelo = construir_modelo_kpi(registros, clientes_estructura, kpis)
-    por_ve = construir_datos_por_ve(clientes_estructura, modelo, kpis, negociaciones)
+    por_ve = construir_datos_por_ve(clientes_estructura, modelo, kpis, negociaciones, rec_cerveza, rec_ung)
 
     os.makedirs(CARPETA_SALIDA, exist_ok=True)
     plantilla_path = os.path.join(CARPETA, "plantilla.html")

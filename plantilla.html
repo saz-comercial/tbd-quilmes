@@ -162,14 +162,14 @@ let busqueda = "";
 let vista = "dashboard";
 let listaActual = [];
 let listaTitulo = "";
-let listaMostrarRecencia = false;
+let listaCampoRecencia = null;
 let clienteDetalleCod = null;
 
 const GRUPOS_CCC = {
-  CCC_CVZ: {titulo: "CCC CVZ · con compra de cerveza", filtro: c => c.kpi["TBD CZA"].tiene > 0, recencia: false},
-  CNC_CVZ: {titulo: "CNC CVZ · sin compra de cerveza", filtro: c => c.kpi["TBD CZA"].tiene === 0, recencia: true},
-  CCC_UNG: {titulo: "CCC UNG · con compra de UNG/gaseosa", filtro: c => c.kpi["TBD UNG + AGUA"].tiene > 0, recencia: false},
-  CNC_UNG: {titulo: "CNC UNG · sin compra de UNG/gaseosa", filtro: c => c.kpi["TBD UNG + AGUA"].tiene === 0, recencia: true},
+  CCC_CVZ: {titulo: "CCC CVZ · con compra de cerveza", filtro: c => c.kpi["TBD CZA"].tiene > 0, campoRecencia: null},
+  CNC_CVZ: {titulo: "CNC CVZ · sin compra de cerveza", filtro: c => c.kpi["TBD CZA"].tiene === 0, campoRecencia: "cerveza"},
+  CCC_UNG: {titulo: "CCC UNG · con compra de UNG/gaseosa", filtro: c => c.kpi["TBD UNG + AGUA"].tiene > 0, campoRecencia: null},
+  CNC_UNG: {titulo: "CNC UNG · sin compra de UNG/gaseosa", filtro: c => c.kpi["TBD UNG + AGUA"].tiene === 0, campoRecencia: "ung"},
 };
 
 function irALista(tipo){
@@ -178,7 +178,7 @@ function irALista(tipo){
     (b.negociacion.tiene - a.negociacion.tiene) || a.nombre.localeCompare(b.nombre)
   );
   listaTitulo = spec.titulo;
-  listaMostrarRecencia = spec.recencia;
+  listaCampoRecencia = spec.campoRecencia;
   vista = "lista";
   renderTodo();
   window.scrollTo(0, 0);
@@ -251,8 +251,8 @@ function renderLista(){
   }
   cont.innerHTML = listaActual.map(c => {
     const neg = c.negociacion.tiene;
-    const recenciaLinea = listaMostrarRecencia
-      ? `<div class="fc-sub">Última compra: ${c.recencia || "sin datos"}</div>`
+    const recenciaLinea = listaCampoRecencia
+      ? `<div class="fc-sub">Última compra: ${c.recencia[listaCampoRecencia] || "sin datos"}</div>`
       : "";
     return `
       <div class="fila-cliente ${neg ? "tiene-neg" : ""}" ${neg ? `onclick="irADetalle(${c.cod})"` : ""}>
