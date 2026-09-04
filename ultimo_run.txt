@@ -1,29 +1,31 @@
-2026-09-03 20:39:12 UTC
+2026-09-04 10:55:07 UTC
 
 === Generador de reportes TBD ===
 
 📄 Base de ventas: Base Santi.xlsx
-   1709 filas de venta cargadas.
+   7595 filas de venta cargadas.
 📄 Estructura de clientes: Estructura actualizada 23-07-2026.xlsx
    3599 clientes reales en Estructura (3 filas basura descartadas).
 
+⚠️  Calibres de CERVEZA sin clasificar en codif (afecta CZA/LATONES/etc): {'269 cc lata'}
+
 --- Validando números de control ---
-  ❌ TBD CZA: TBD=970 (esperado 12646) | Clientes=296 (esperado 2107)
-  ❌ TBD CORE + VALUE: TBD=680 (esperado 8813) | Clientes=273 (esperado 2014)
-  ❌ TBD ABOVE CORE: TBD=290 (esperado 3833) | Clientes=130 (esperado 1185)
-  ❌ TBD LATONES: TBD=237 (esperado 2905) | Clientes=130 (esperado 1200)
-  ❌ TBD 0.0% + MUL: TBD=86 (esperado 1422) | Clientes=64 (esperado 773)
+  ❌ TBD CZA: TBD=3853 (esperado 12646) | Clientes=1111 (esperado 2107)
+  ❌ TBD CORE + VALUE: TBD=2774 (esperado 8813) | Clientes=1019 (esperado 2014)
+  ❌ TBD ABOVE CORE: TBD=1079 (esperado 3833) | Clientes=494 (esperado 1185)
+  ❌ TBD LATONES: TBD=958 (esperado 2905) | Clientes=527 (esperado 1200)
+  ❌ TBD 0.0% + MUL: TBD=313 (esperado 1422) | Clientes=220 (esperado 773)
   ℹ️  TBD UNG + AGUA: sin número de control fijo (definición cambió recientemente), no se valida.
 
 ⚠️  Los números de control NO cierran. Puede ser normal si el mes avanzó
    (la base se actualiza a diario), pero si el desvío es grande, avisame.
 
-⚠️  6 clientes están en la base pero NO en Estructura (altas nuevas, no van a ningún VE):
-   569345, 569454, 569464, 569479, 569490, 569693
+⚠️  23 clientes están en la base pero NO en Estructura (altas nuevas, no van a ningún VE):
+   310240, 568787, 568797, 569263, 569345, 569379, 569408, 569454, 569464, 569479, 569481, 569484, 569490, 569545, 569547, 569573, 569669, 569693, 569759, 569791, 569795, 569796, 569815
 📄 Negociaciones: TBD+ONLINE 2026.xlsx
    132 clientes con negociación vigente hoy (0 filas vencidas o futuras, ignoradas).
 📄 historial_compras.csv: 5990 pares cliente+categoría cargados.
-   Guardé historial_compras.csv con 5990 pares cliente+categoría.
+   Guardé historial_compras.csv con 6001 pares cliente+categoría.
 
 --- Armando reportes por vendedor ---
 
