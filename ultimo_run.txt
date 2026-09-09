@@ -1,4 +1,4 @@
-2026-09-09 22:13:03 UTC
+2026-09-09 22:15:52 UTC
 
 === Generador de reportes TBD ===
 
@@ -7,9 +7,9 @@
 📄 Estructura de clientes: Estructura actualizada 23-07-2026.xlsx
    3599 clientes reales en Estructura (3 filas basura descartadas).
 
-⚠️  Marcas de CERVEZA sin clasificar en codif (afecta CORE+VALUE/ABOVE CORE): {'brahma ft limon', 'brahma ft pomelo'}
+⚠️  Marcas de CERVEZA sin clasificar en codif (afecta CORE+VALUE/ABOVE CORE): {'brahma ft pomelo', 'brahma ft limon'}
 
-⚠️  Calibres de CERVEZA sin clasificar en codif (afecta CZA/LATONES/etc): {'269 cc lata', '473 cc'}
+⚠️  Calibres de CERVEZA sin clasificar en codif (afecta CZA/LATONES/etc): {'473 cc', '269 cc lata'}
 
 --- Validando números de control ---
   ❌ TBD CZA: TBD=6800 (esperado 12646) | Clientes=1628 (esperado 2107)
