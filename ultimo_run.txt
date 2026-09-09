@@ -1,4 +1,4 @@
-2026-09-09 22:17:26 UTC
+2026-09-09 22:44:49 UTC
 
 === Generador de reportes TBD ===
 
@@ -9,7 +9,7 @@
 
 ⚠️  Marcas de CERVEZA sin clasificar en codif (afecta CORE+VALUE/ABOVE CORE): {'brahma ft limon', 'brahma ft pomelo'}
 
-⚠️  Calibres de CERVEZA sin clasificar en codif (afecta CZA/LATONES/etc): {'269 cc lata', '473 cc'}
+⚠️  Calibres de CERVEZA sin clasificar en codif (afecta CZA/LATONES/etc): {'473 cc', '269 cc lata'}
 
 --- Validando números de control ---
   ❌ TBD CZA: TBD=6800 (esperado 12646) | Clientes=1628 (esperado 2107)
@@ -37,6 +37,7 @@
    👤 Santiago Saucedo: 6 territorios, 712 clientes.
    👤 Aylen Mangold: 8 territorios, 1441 clientes.
    🗝️  Maestro: 27 territorios, 3599 clientes.
+   👔 Jefe de ventas: 4 zonas, 27 territorios.
 
 🔒 4 tableros de supervisor generados y cifrados.
    Links y PINs: claves_supervisores.json (repo privado).
