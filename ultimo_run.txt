@@ -1,4 +1,4 @@
-2026-09-09 22:46:31 UTC
+2026-09-09 22:53:25 UTC
 
 === Generador de reportes TBD ===
 
@@ -9,7 +9,7 @@
 
 ⚠️  Marcas de CERVEZA sin clasificar en codif (afecta CORE+VALUE/ABOVE CORE): {'brahma ft pomelo', 'brahma ft limon'}
 
-⚠️  Calibres de CERVEZA sin clasificar en codif (afecta CZA/LATONES/etc): {'269 cc lata', '473 cc'}
+⚠️  Calibres de CERVEZA sin clasificar en codif (afecta CZA/LATONES/etc): {'473 cc', '269 cc lata'}
 
 --- Validando números de control ---
   ❌ TBD CZA: TBD=6800 (esperado 12646) | Clientes=1628 (esperado 2107)
