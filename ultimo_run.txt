@@ -1,4 +1,4 @@
-2026-09-09 21:37:15 UTC
+2026-09-09 22:12:35 UTC
 
 === Generador de reportes TBD ===
 
@@ -7,9 +7,9 @@
 📄 Estructura de clientes: Estructura actualizada 23-07-2026.xlsx
    3599 clientes reales en Estructura (3 filas basura descartadas).
 
-⚠️  Marcas de CERVEZA sin clasificar en codif (afecta CORE+VALUE/ABOVE CORE): {'brahma ft limon', 'brahma ft pomelo'}
+⚠️  Marcas de CERVEZA sin clasificar en codif (afecta CORE+VALUE/ABOVE CORE): {'brahma ft pomelo', 'brahma ft limon'}
 
-⚠️  Calibres de CERVEZA sin clasificar en codif (afecta CZA/LATONES/etc): {'473 cc', '269 cc lata'}
+⚠️  Calibres de CERVEZA sin clasificar en codif (afecta CZA/LATONES/etc): {'269 cc lata', '473 cc'}
 
 --- Validando números de control ---
   ❌ TBD CZA: TBD=6800 (esperado 12646) | Clientes=1628 (esperado 2107)
@@ -36,6 +36,7 @@
    👤 Eugenia Bianchi: 8 territorios, 1217 clientes.
    👤 Santiago Saucedo: 6 territorios, 712 clientes.
    👤 Aylen Mangold: 8 territorios, 1441 clientes.
+   🗝️  Maestro: 27 territorios, 3599 clientes.
 
 🔒 4 tableros de supervisor generados y cifrados.
    Links y PINs: claves_supervisores.json (repo privado).
