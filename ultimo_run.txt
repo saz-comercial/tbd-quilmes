@@ -1,1 +1,45 @@
-Sitio generado automaticamente. El detalle de cada corrida esta en el repo privado.
+2026-09-09 21:35:04 UTC
+
+=== Generador de reportes TBD ===
+
+📄 Base de ventas: Base Santi.xlsx
+   13564 filas de venta cargadas.
+📄 Estructura de clientes: Estructura actualizada 23-07-2026.xlsx
+   3599 clientes reales en Estructura (3 filas basura descartadas).
+
+⚠️  Marcas de CERVEZA sin clasificar en codif (afecta CORE+VALUE/ABOVE CORE): {'brahma ft pomelo', 'brahma ft limon'}
+
+⚠️  Calibres de CERVEZA sin clasificar en codif (afecta CZA/LATONES/etc): {'269 cc lata', '473 cc'}
+
+--- Validando números de control ---
+  ❌ TBD CZA: TBD=6800 (esperado 12646) | Clientes=1628 (esperado 2107)
+  ❌ TBD CORE + VALUE: TBD=4782 (esperado 8813) | Clientes=1522 (esperado 2014)
+  ❌ TBD ABOVE CORE: TBD=2003 (esperado 3833) | Clientes=815 (esperado 1185)
+  ❌ TBD LATONES: TBD=1655 (esperado 2905) | Clientes=864 (esperado 1200)
+  ❌ TBD 0.0% + MUL: TBD=600 (esperado 1422) | Clientes=407 (esperado 773)
+  ℹ️  TBD UNG + AGUA: sin número de control fijo (definición cambió recientemente), no se valida.
+
+⚠️  Los números de control NO cierran. Puede ser normal si el mes avanzó
+   (la base se actualiza a diario), pero si el desvío es grande, avisame.
+
+⚠️  40 clientes están en la base pero NO en Estructura (altas nuevas, no van a ningún VE):
+   310240, 568787, 568797, 569230, 569263, 569266, 569345, 569379, 569405, 569408, 569454, 569464, 569473, 569479, 569481, 569484, 569487, 569490, 569508, 569517, 569545, 569547, 569558, 569573, 569575, 569643, 569669, 569693, 569700, 569759, 569791, 569793, 569795, 569796, 569815, 569822, 569853, 569873, 569899, 569917
+📄 Negociaciones: TBD+ONLINE 2026.xlsx
+   132 clientes con negociación vigente hoy (0 filas vencidas o futuras, ignoradas).
+📄 Objetivos: objetivos.xlsx
+   27 vendedores y 4 supervisores con objetivo cargado.
+📄 historial_compras.csv: 38751 filas cliente+categoría+mes cargadas.
+   Guardé historial_compras.csv con 38751 filas cliente+categoría+mes.
+
+--- Armando reportes por vendedor ---
+   👤 Mariana Gonzalez: 5 territorios, 229 clientes.
+   👤 Eugenia Bianchi: 8 territorios, 1217 clientes.
+   👤 Santiago Saucedo: 6 territorios, 712 clientes.
+   👤 Aylen Mangold: 8 territorios, 1441 clientes.
+
+🔒 4 tableros de supervisor generados y cifrados.
+   Links y PINs: claves_supervisores.json (repo privado).
+
+✅ Generé 27 reportes en la carpeta 'salida/'.
+   Mandale a cada vendedor el HTML de su VE (por WhatsApp, mail, lo que uses).
+   Se abre directo en el celular, sin internet y sin instalar nada.
