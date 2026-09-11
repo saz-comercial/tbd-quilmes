@@ -1,4 +1,4 @@
-2026-09-11 01:30:30 UTC
+2026-09-11 01:54:08 UTC
 
 === Generador de reportes TBD ===
 
@@ -28,6 +28,7 @@
    132 clientes con negociación vigente hoy (0 filas vencidas o futuras, ignoradas).
 📄 Objetivos: objetivos.xlsx
    27 vendedores y 4 supervisores con objetivo cargado.
+   📝 Promotor del 1364: Agustin Sanchez (en objetivos figura Cettú Nicolás)
 📄 historial_compras.csv: 38949 filas cliente+categoría+mes cargadas.
    Guardé historial_compras.csv con 38949 filas cliente+categoría+mes.
 
