@@ -1,4 +1,4 @@
-2026-09-10 10:46:04 UTC
+2026-09-11 01:16:45 UTC
 
 === Generador de reportes TBD ===
 
@@ -7,9 +7,9 @@
 📄 Estructura de clientes: Estructura actualizada 23-07-2026.xlsx
    3599 clientes reales en Estructura (3 filas basura descartadas).
 
-⚠️  Marcas de CERVEZA sin clasificar en codif (afecta CORE+VALUE/ABOVE CORE): {'brahma ft limon', 'brahma ft pomelo'}
+⚠️  Marcas de CERVEZA sin clasificar en codif (afecta CORE+VALUE/ABOVE CORE): {'brahma ft pomelo', 'brahma ft limon'}
 
-⚠️  Calibres de CERVEZA sin clasificar en codif (afecta CZA/LATONES/etc): {'473 cc', '269 cc lata'}
+⚠️  Calibres de CERVEZA sin clasificar en codif (afecta CZA/LATONES/etc): {'269 cc lata', '473 cc'}
 
 --- Validando números de control ---
   ❌ TBD CZA: TBD=7607 (esperado 12646) | Clientes=1729 (esperado 2107)
@@ -28,7 +28,7 @@
    132 clientes con negociación vigente hoy (0 filas vencidas o futuras, ignoradas).
 📄 Objetivos: objetivos.xlsx
    27 vendedores y 4 supervisores con objetivo cargado.
-📄 historial_compras.csv: 38751 filas cliente+categoría+mes cargadas.
+📄 historial_compras.csv: 38949 filas cliente+categoría+mes cargadas.
    Guardé historial_compras.csv con 38949 filas cliente+categoría+mes.
 
 --- Armando reportes por vendedor ---
