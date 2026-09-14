@@ -1,4 +1,4 @@
-2026-09-11 10:01:27 UTC
+2026-09-14 10:00:46 UTC
 
 === Generador de reportes TBD ===
 
@@ -9,7 +9,7 @@
 
 ⚠️  Marcas de CERVEZA sin clasificar en codif (afecta CORE+VALUE/ABOVE CORE): {'brahma ft limon', 'brahma ft pomelo'}
 
-⚠️  Calibres de CERVEZA sin clasificar en codif (afecta CZA/LATONES/etc): {'473 cc', '269 cc lata'}
+⚠️  Calibres de CERVEZA sin clasificar en codif (afecta CZA/LATONES/etc): {'269 cc lata', '473 cc'}
 
 --- Validando números de control ---
   ❌ TBD CZA: TBD=8707 (esperado 12646) | Clientes=1861 (esperado 2107)
@@ -29,7 +29,7 @@
 📄 Objetivos: objetivos.xlsx
    27 vendedores y 4 supervisores con objetivo cargado.
    📝 Promotor del 1364: Agustin Sanchez (en objetivos figura Cettú Nicolás)
-📄 historial_compras.csv: 38949 filas cliente+categoría+mes cargadas.
+📄 historial_compras.csv: 39206 filas cliente+categoría+mes cargadas.
    Guardé historial_compras.csv con 39206 filas cliente+categoría+mes.
 
 --- Armando reportes por vendedor ---
