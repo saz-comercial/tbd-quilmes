@@ -1,4 +1,4 @@
-2026-09-18 12:07:29 UTC
+2026-09-21 00:36:57 UTC
 
 === Generador de reportes TBD ===
 
@@ -28,13 +28,12 @@
    131 clientes con negociación vigente hoy (16 filas vencidas o futuras, ignoradas).
 📄 Objetivos: objetivos.xlsx
    27 vendedores y 4 supervisores con objetivo cargado.
-   📝 Promotor del 1364: Agustin Sanchez (en objetivos figura Cettú Nicolás)
-📄 historial_compras.csv: 39755 filas cliente+categoría+mes cargadas.
+📄 historial_compras.csv: 39862 filas cliente+categoría+mes cargadas.
    Guardé historial_compras.csv con 39862 filas cliente+categoría+mes.
 
 --- Armando reportes por vendedor ---
    👤 Mariana Gonzalez: 5 territorios, 229 clientes.
-   👤 Eugenia Bianchi: 8 territorios, 1217 clientes.
+   👤 Euge Bianchi: 8 territorios, 1217 clientes.
    👤 Santiago Saucedo: 6 territorios, 712 clientes.
    👤 Aylen Mangold: 8 territorios, 1441 clientes.
    🗝️  Maestro: 27 territorios, 3599 clientes.
