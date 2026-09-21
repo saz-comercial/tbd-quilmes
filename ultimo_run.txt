@@ -1,29 +1,29 @@
-2026-09-21 01:20:26 UTC
+2026-09-21 11:27:51 UTC
 
 === Generador de reportes TBD ===
 
 📄 Base de ventas: Base Santi.xlsx
-   24738 filas de venta cargadas.
+   26705 filas de venta cargadas.
 📄 Estructura de clientes: Estructura actualizada 23-07-2026.xlsx
    3599 clientes reales en Estructura (3 filas basura descartadas).
 
-⚠️  Marcas de CERVEZA sin clasificar en codif (afecta CORE+VALUE/ABOVE CORE): {'brahma ft pomelo', 'brahma ft limon'}
+⚠️  Marcas de CERVEZA sin clasificar en codif (afecta CORE+VALUE/ABOVE CORE): {'brahma ft limon', 'brahma ft pomelo', 'flying fish'}
 
-⚠️  Calibres de CERVEZA sin clasificar en codif (afecta CZA/LATONES/etc): {'269 cc lata', '473 cc'}
+⚠️  Calibres de CERVEZA sin clasificar en codif (afecta CZA/LATONES/etc): {'473 cc', '269 cc lata'}
 
 --- Validando números de control ---
-  ❌ TBD CZA: TBD=12299 (esperado 12646) | Clientes=2170 (esperado 2107)
-  ❌ TBD CORE + VALUE: TBD=7862 (esperado 8813) | Clientes=2037 (esperado 2014)
-  ❌ TBD ABOVE CORE: TBD=4035 (esperado 3833) | Clientes=1303 (esperado 1185)
-  ❌ TBD LATONES: TBD=2662 (esperado 2905) | Clientes=1250 (esperado 1200)
-  ❌ TBD 0.0% + MUL: TBD=1318 (esperado 1422) | Clientes=775 (esperado 773)
+  ❌ TBD CZA: TBD=13133 (esperado 12646) | Clientes=2234 (esperado 2107)
+  ❌ TBD CORE + VALUE: TBD=8380 (esperado 8813) | Clientes=2100 (esperado 2014)
+  ❌ TBD ABOVE CORE: TBD=4336 (esperado 3833) | Clientes=1369 (esperado 1185)
+  ❌ TBD LATONES: TBD=2825 (esperado 2905) | Clientes=1290 (esperado 1200)
+  ❌ TBD 0.0% + MUL: TBD=1421 (esperado 1422) | Clientes=816 (esperado 773)
   ℹ️  TBD UNG + AGUA: sin número de control fijo (definición cambió recientemente), no se valida.
 
 ⚠️  Los números de control NO cierran. Puede ser normal si el mes avanzó
    (la base se actualiza a diario), pero si el desvío es grande, avisame.
 
-⚠️  54 clientes están en la base pero NO en Estructura (altas nuevas, no van a ningún VE):
-   310240, 437325, 568787, 568788, 568797, 569223, 569230, 569263, 569266, 569280, 569345, 569379, 569405, 569408, 569454, 569464, 569467, 569473, 569479, 569481, 569484, 569487, 569490, 569508, 569517, 569545, 569547, 569558, 569573, 569575, 569619, 569643, 569669, 569688, 569693, 569700, 569759, 569791, 569793, 569795, 569796, 569812, 569815, 569822, 569824, 569853, 569873, 569899, 569917, 569930, 569935, 570021, 570031, 570127
+⚠️  55 clientes están en la base pero NO en Estructura (altas nuevas, no van a ningún VE):
+   310240, 437325, 568787, 568788, 568797, 569223, 569230, 569263, 569266, 569280, 569345, 569379, 569405, 569408, 569454, 569464, 569467, 569473, 569479, 569481, 569484, 569487, 569490, 569508, 569517, 569545, 569547, 569558, 569573, 569575, 569619, 569643, 569669, 569688, 569693, 569700, 569759, 569791, 569793, 569795, 569796, 569812, 569815, 569822, 569824, 569853, 569873, 569897, 569899, 569917, 569930, 569935, 570021, 570031, 570127
 📄 Negociaciones: TBD+ONLINE 2026.xlsx
    131 clientes con negociación vigente hoy (16 filas vencidas o futuras, ignoradas).
 📄 Objetivos: objetivos.xlsx
@@ -31,7 +31,7 @@
    27 vendedores y 4 supervisores con objetivo cargado.
    📝 Supervisor del 451: Eugenia Bianchi (en objetivos figura Euge Bianchi)
 📄 historial_compras.csv: 39862 filas cliente+categoría+mes cargadas.
-   Guardé historial_compras.csv con 39862 filas cliente+categoría+mes.
+   Guardé historial_compras.csv con 39995 filas cliente+categoría+mes.
 
 --- Armando reportes por vendedor ---
    👤 Mariana Gonzalez: 5 territorios, 229 clientes.
