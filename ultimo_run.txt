@@ -1,4 +1,4 @@
-2026-09-22 11:26:00 UTC
+2026-09-22 11:54:56 UTC
 
 === Generador de reportes TBD ===
 
@@ -7,12 +7,9 @@
 📄 Estructura de clientes: Estructura actualizada 09-09-2026.xlsx
    3586 clientes reales en Estructura (16 filas basura descartadas).
 
-⚠️  Calibres de CERVEZA sin clasificar en codif: {'269 cc lata'}
-   Hasta 223 TBD de cerveza no se están contando en NINGÚN KPI: una venta con el calibre en blanco se descarta entera. Cargalos en codif.
-
 --- Validando números de control ---
-  ❌ TBD CZA: TBD=13668 (esperado 12646) | Clientes=2260 (esperado 2107)
-  ❌ TBD CORE + VALUE: TBD=9114 (esperado 8813) | Clientes=2131 (esperado 2014)
+  ❌ TBD CZA: TBD=13635 (esperado 12646) | Clientes=2260 (esperado 2107)
+  ❌ TBD CORE + VALUE: TBD=9081 (esperado 8813) | Clientes=2131 (esperado 2014)
   ❌ TBD ABOVE CORE: TBD=4554 (esperado 3833) | Clientes=1404 (esperado 1185)
   ❌ TBD LATONES: TBD=2930 (esperado 2905) | Clientes=1318 (esperado 1200)
   ❌ TBD 0.0% + MUL: TBD=1504 (esperado 1422) | Clientes=845 (esperado 773)
@@ -29,7 +26,7 @@
    ℹ️  TBD LATONES: septiembre no trae objetivo nuevo, sigue el de 'julio'.
    27 vendedores y 4 supervisores con objetivo cargado.
    📝 Supervisor del 451: Eugenia Bianchi (en objetivos figura Euge Bianchi)
-📄 historial_compras.csv: 39995 filas cliente+categoría+mes cargadas.
+📄 historial_compras.csv: 40060 filas cliente+categoría+mes cargadas.
    Guardé historial_compras.csv con 40060 filas cliente+categoría+mes.
 ℹ️  No encontré el Excel de batallas, genero los reportes sin la sección Lotes.
 
