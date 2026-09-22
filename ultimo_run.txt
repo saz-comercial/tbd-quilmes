@@ -1,31 +1,28 @@
-2026-09-22 02:23:50 UTC
+2026-09-22 11:26:00 UTC
 
 === Generador de reportes TBD ===
 
 📄 Base de ventas: Base Santi.xlsx
-   26705 filas de venta cargadas.
+   27894 filas de venta cargadas.
 📄 Estructura de clientes: Estructura actualizada 09-09-2026.xlsx
    3586 clientes reales en Estructura (16 filas basura descartadas).
 
-⚠️  Marcas de CERVEZA sin clasificar en codif: {'brahma ft limon', 'flying fish', 'brahma ft pomelo'}
-   209 TBD cuentan en Cerveza pero en ningún segmento (por eso CZA no da igual a CORE+VALUE + ABOVE CORE). Cargales el Segmento en codif.
-
-⚠️  Calibres de CERVEZA sin clasificar en codif: {'473 cc', '269 cc lata'}
-   Hasta 429 TBD de cerveza no se están contando en NINGÚN KPI: una venta con el calibre en blanco se descarta entera. Cargalos en codif.
+⚠️  Calibres de CERVEZA sin clasificar en codif: {'269 cc lata'}
+   Hasta 223 TBD de cerveza no se están contando en NINGÚN KPI: una venta con el calibre en blanco se descarta entera. Cargalos en codif.
 
 --- Validando números de control ---
-  ❌ TBD CZA: TBD=13133 (esperado 12646) | Clientes=2234 (esperado 2107)
-  ❌ TBD CORE + VALUE: TBD=8380 (esperado 8813) | Clientes=2100 (esperado 2014)
-  ❌ TBD ABOVE CORE: TBD=4336 (esperado 3833) | Clientes=1369 (esperado 1185)
-  ❌ TBD LATONES: TBD=2825 (esperado 2905) | Clientes=1290 (esperado 1200)
-  ❌ TBD 0.0% + MUL: TBD=1421 (esperado 1422) | Clientes=816 (esperado 773)
+  ❌ TBD CZA: TBD=13668 (esperado 12646) | Clientes=2260 (esperado 2107)
+  ❌ TBD CORE + VALUE: TBD=9114 (esperado 8813) | Clientes=2131 (esperado 2014)
+  ❌ TBD ABOVE CORE: TBD=4554 (esperado 3833) | Clientes=1404 (esperado 1185)
+  ❌ TBD LATONES: TBD=2930 (esperado 2905) | Clientes=1318 (esperado 1200)
+  ❌ TBD 0.0% + MUL: TBD=1504 (esperado 1422) | Clientes=845 (esperado 773)
   ℹ️  TBD UNG + AGUA: sin número de control fijo (definición cambió recientemente), no se valida.
 
 ⚠️  Los números de control NO cierran. Puede ser normal si el mes avanzó
    (la base se actualiza a diario), pero si el desvío es grande, avisame.
 
-⚠️  8 clientes están en la base pero NO en Estructura (altas nuevas, no van a ningún VE):
-   310240, 437325, 568787, 568788, 568797, 570021, 570031, 570127
+⚠️  9 clientes están en la base pero NO en Estructura (altas nuevas, no van a ningún VE):
+   310240, 437325, 568787, 568788, 568797, 570021, 570031, 570127, 570238
 📄 Negociaciones: TBD+ONLINE 2026.xlsx
    131 clientes con negociación vigente hoy (16 filas vencidas o futuras, ignoradas).
 📄 Objetivos: objetivos.xlsx
@@ -33,7 +30,7 @@
    27 vendedores y 4 supervisores con objetivo cargado.
    📝 Supervisor del 451: Eugenia Bianchi (en objetivos figura Euge Bianchi)
 📄 historial_compras.csv: 39995 filas cliente+categoría+mes cargadas.
-   Guardé historial_compras.csv con 39995 filas cliente+categoría+mes.
+   Guardé historial_compras.csv con 40060 filas cliente+categoría+mes.
 ℹ️  No encontré el Excel de batallas, genero los reportes sin la sección Lotes.
 
 --- Armando reportes por vendedor ---
