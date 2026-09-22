@@ -1,15 +1,15 @@
-2026-09-22 00:35:44 UTC
+2026-09-22 02:15:28 UTC
 
 === Generador de reportes TBD ===
 
 📄 Base de ventas: Base Santi.xlsx
    26705 filas de venta cargadas.
-📄 Estructura de clientes: Estructura actualizada 23-07-2026.xlsx
-   3599 clientes reales en Estructura (3 filas basura descartadas).
+📄 Estructura de clientes: Estructura actualizada 09-09-2026.xlsx
+   3586 clientes reales en Estructura (16 filas basura descartadas).
 
-⚠️  Marcas de CERVEZA sin clasificar en codif (afecta CORE+VALUE/ABOVE CORE): {'flying fish', 'brahma ft pomelo', 'brahma ft limon'}
+⚠️  Marcas de CERVEZA sin clasificar en codif (afecta CORE+VALUE/ABOVE CORE): {'brahma ft limon', 'flying fish', 'brahma ft pomelo'}
 
-⚠️  Calibres de CERVEZA sin clasificar en codif (afecta CZA/LATONES/etc): {'473 cc', '269 cc lata'}
+⚠️  Calibres de CERVEZA sin clasificar en codif (afecta CZA/LATONES/etc): {'269 cc lata', '473 cc'}
 
 --- Validando números de control ---
   ❌ TBD CZA: TBD=13133 (esperado 12646) | Clientes=2234 (esperado 2107)
@@ -22,8 +22,8 @@
 ⚠️  Los números de control NO cierran. Puede ser normal si el mes avanzó
    (la base se actualiza a diario), pero si el desvío es grande, avisame.
 
-⚠️  55 clientes están en la base pero NO en Estructura (altas nuevas, no van a ningún VE):
-   310240, 437325, 568787, 568788, 568797, 569223, 569230, 569263, 569266, 569280, 569345, 569379, 569405, 569408, 569454, 569464, 569467, 569473, 569479, 569481, 569484, 569487, 569490, 569508, 569517, 569545, 569547, 569558, 569573, 569575, 569619, 569643, 569669, 569688, 569693, 569700, 569759, 569791, 569793, 569795, 569796, 569812, 569815, 569822, 569824, 569853, 569873, 569897, 569899, 569917, 569930, 569935, 570021, 570031, 570127
+⚠️  8 clientes están en la base pero NO en Estructura (altas nuevas, no van a ningún VE):
+   310240, 437325, 568787, 568788, 568797, 570021, 570031, 570127
 📄 Negociaciones: TBD+ONLINE 2026.xlsx
    131 clientes con negociación vigente hoy (16 filas vencidas o futuras, ignoradas).
 📄 Objetivos: objetivos.xlsx
@@ -32,13 +32,14 @@
    📝 Supervisor del 451: Eugenia Bianchi (en objetivos figura Euge Bianchi)
 📄 historial_compras.csv: 39995 filas cliente+categoría+mes cargadas.
    Guardé historial_compras.csv con 39995 filas cliente+categoría+mes.
+ℹ️  No encontré el Excel de batallas, genero los reportes sin la sección Lotes.
 
 --- Armando reportes por vendedor ---
-   👤 Mariana Gonzalez: 5 territorios, 229 clientes.
-   👤 Eugenia Bianchi: 8 territorios, 1217 clientes.
-   👤 Santiago Saucedo: 6 territorios, 712 clientes.
-   👤 Aylen Mangold: 8 territorios, 1441 clientes.
-   🗝️  Maestro: 27 territorios, 3599 clientes.
+   👤 Mariana Gonzalez: 5 territorios, 227 clientes.
+   👤 Eugenia Bianchi: 8 territorios, 1214 clientes.
+   👤 Santiago Saucedo: 6 territorios, 709 clientes.
+   👤 Aylen Mangold: 8 territorios, 1436 clientes.
+   🗝️  Maestro: 27 territorios, 3586 clientes.
    👔 Jefe de ventas: 4 zonas, 27 territorios.
 
 🔒 4 tableros de supervisor generados y cifrados.
