@@ -1,4 +1,4 @@
-2026-09-22 02:15:28 UTC
+2026-09-22 02:23:50 UTC
 
 === Generador de reportes TBD ===
 
@@ -7,9 +7,11 @@
 📄 Estructura de clientes: Estructura actualizada 09-09-2026.xlsx
    3586 clientes reales en Estructura (16 filas basura descartadas).
 
-⚠️  Marcas de CERVEZA sin clasificar en codif (afecta CORE+VALUE/ABOVE CORE): {'brahma ft limon', 'flying fish', 'brahma ft pomelo'}
+⚠️  Marcas de CERVEZA sin clasificar en codif: {'brahma ft limon', 'flying fish', 'brahma ft pomelo'}
+   209 TBD cuentan en Cerveza pero en ningún segmento (por eso CZA no da igual a CORE+VALUE + ABOVE CORE). Cargales el Segmento en codif.
 
-⚠️  Calibres de CERVEZA sin clasificar en codif (afecta CZA/LATONES/etc): {'269 cc lata', '473 cc'}
+⚠️  Calibres de CERVEZA sin clasificar en codif: {'473 cc', '269 cc lata'}
+   Hasta 429 TBD de cerveza no se están contando en NINGÚN KPI: una venta con el calibre en blanco se descarta entera. Cargalos en codif.
 
 --- Validando números de control ---
   ❌ TBD CZA: TBD=13133 (esperado 12646) | Clientes=2234 (esperado 2107)
