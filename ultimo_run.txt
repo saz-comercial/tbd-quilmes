@@ -1,25 +1,25 @@
-2026-09-22 11:54:56 UTC
+2026-09-23 11:36:21 UTC
 
 === Generador de reportes TBD ===
 
 📄 Base de ventas: Base Santi.xlsx
-   27894 filas de venta cargadas.
+   28987 filas de venta cargadas.
 📄 Estructura de clientes: Estructura actualizada 09-09-2026.xlsx
    3586 clientes reales en Estructura (16 filas basura descartadas).
 
 --- Validando números de control ---
-  ❌ TBD CZA: TBD=13635 (esperado 12646) | Clientes=2260 (esperado 2107)
-  ❌ TBD CORE + VALUE: TBD=9081 (esperado 8813) | Clientes=2131 (esperado 2014)
-  ❌ TBD ABOVE CORE: TBD=4554 (esperado 3833) | Clientes=1404 (esperado 1185)
-  ❌ TBD LATONES: TBD=2930 (esperado 2905) | Clientes=1318 (esperado 1200)
-  ❌ TBD 0.0% + MUL: TBD=1504 (esperado 1422) | Clientes=845 (esperado 773)
+  ❌ TBD CZA: TBD=14093 (esperado 12646) | Clientes=2295 (esperado 2107)
+  ❌ TBD CORE + VALUE: TBD=9346 (esperado 8813) | Clientes=2163 (esperado 2014)
+  ❌ TBD ABOVE CORE: TBD=4747 (esperado 3833) | Clientes=1435 (esperado 1185)
+  ❌ TBD LATONES: TBD=3014 (esperado 2905) | Clientes=1336 (esperado 1200)
+  ❌ TBD 0.0% + MUL: TBD=1584 (esperado 1422) | Clientes=883 (esperado 773)
   ℹ️  TBD UNG + AGUA: sin número de control fijo (definición cambió recientemente), no se valida.
 
 ⚠️  Los números de control NO cierran. Puede ser normal si el mes avanzó
    (la base se actualiza a diario), pero si el desvío es grande, avisame.
 
-⚠️  9 clientes están en la base pero NO en Estructura (altas nuevas, no van a ningún VE):
-   310240, 437325, 568787, 568788, 568797, 570021, 570031, 570127, 570238
+⚠️  10 clientes están en la base pero NO en Estructura (altas nuevas, no van a ningún VE):
+   310240, 437325, 568787, 568788, 568797, 570021, 570031, 570127, 570130, 570238
 📄 Negociaciones: TBD+ONLINE 2026.xlsx
    131 clientes con negociación vigente hoy (16 filas vencidas o futuras, ignoradas).
 📄 Objetivos: objetivos.xlsx
@@ -27,7 +27,7 @@
    27 vendedores y 4 supervisores con objetivo cargado.
    📝 Supervisor del 451: Eugenia Bianchi (en objetivos figura Euge Bianchi)
 📄 historial_compras.csv: 40060 filas cliente+categoría+mes cargadas.
-   Guardé historial_compras.csv con 40060 filas cliente+categoría+mes.
+   Guardé historial_compras.csv con 40129 filas cliente+categoría+mes.
 ℹ️  No encontré el Excel de batallas, genero los reportes sin la sección Lotes.
 
 --- Armando reportes por vendedor ---
