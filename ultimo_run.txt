@@ -1,4 +1,4 @@
-2026-09-23 11:36:21 UTC
+2026-09-24 11:30:03 UTC
 
 === Generador de reportes TBD ===
 
@@ -26,7 +26,7 @@
    ℹ️  TBD LATONES: septiembre no trae objetivo nuevo, sigue el de 'julio'.
    27 vendedores y 4 supervisores con objetivo cargado.
    📝 Supervisor del 451: Eugenia Bianchi (en objetivos figura Euge Bianchi)
-📄 historial_compras.csv: 40060 filas cliente+categoría+mes cargadas.
+📄 historial_compras.csv: 40129 filas cliente+categoría+mes cargadas.
    Guardé historial_compras.csv con 40129 filas cliente+categoría+mes.
 ℹ️  No encontré el Excel de batallas, genero los reportes sin la sección Lotes.
 
