@@ -1,18 +1,18 @@
-2026-09-24 11:30:03 UTC
+2026-09-24 11:35:17 UTC
 
 === Generador de reportes TBD ===
 
 📄 Base de ventas: Base Santi.xlsx
-   28987 filas de venta cargadas.
+   30124 filas de venta cargadas.
 📄 Estructura de clientes: Estructura actualizada 09-09-2026.xlsx
    3586 clientes reales en Estructura (16 filas basura descartadas).
 
 --- Validando números de control ---
-  ❌ TBD CZA: TBD=14093 (esperado 12646) | Clientes=2295 (esperado 2107)
-  ❌ TBD CORE + VALUE: TBD=9346 (esperado 8813) | Clientes=2163 (esperado 2014)
-  ❌ TBD ABOVE CORE: TBD=4747 (esperado 3833) | Clientes=1435 (esperado 1185)
-  ❌ TBD LATONES: TBD=3014 (esperado 2905) | Clientes=1336 (esperado 1200)
-  ❌ TBD 0.0% + MUL: TBD=1584 (esperado 1422) | Clientes=883 (esperado 773)
+  ❌ TBD CZA: TBD=14609 (esperado 12646) | Clientes=2340 (esperado 2107)
+  ❌ TBD CORE + VALUE: TBD=9651 (esperado 8813) | Clientes=2206 (esperado 2014)
+  ❌ TBD ABOVE CORE: TBD=4958 (esperado 3833) | Clientes=1474 (esperado 1185)
+  ❌ TBD LATONES: TBD=3123 (esperado 2905) | Clientes=1367 (esperado 1200)
+  ❌ TBD 0.0% + MUL: TBD=1678 (esperado 1422) | Clientes=921 (esperado 773)
   ℹ️  TBD UNG + AGUA: sin número de control fijo (definición cambió recientemente), no se valida.
 
 ⚠️  Los números de control NO cierran. Puede ser normal si el mes avanzó
@@ -27,7 +27,7 @@
    27 vendedores y 4 supervisores con objetivo cargado.
    📝 Supervisor del 451: Eugenia Bianchi (en objetivos figura Euge Bianchi)
 📄 historial_compras.csv: 40129 filas cliente+categoría+mes cargadas.
-   Guardé historial_compras.csv con 40129 filas cliente+categoría+mes.
+   Guardé historial_compras.csv con 40219 filas cliente+categoría+mes.
 ℹ️  No encontré el Excel de batallas, genero los reportes sin la sección Lotes.
 
 --- Armando reportes por vendedor ---
