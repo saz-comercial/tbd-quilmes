@@ -1,33 +1,33 @@
-2026-09-25 10:56:19 UTC
+2026-09-28 10:41:09 UTC
 
 === Generador de reportes TBD ===
 
 📄 Base de ventas: Base Santi.xlsx
-   31598 filas de venta cargadas.
+   33410 filas de venta cargadas.
 📄 Estructura de clientes: Estructura actualizada 09-09-2026.xlsx
    3586 clientes reales en Estructura (16 filas basura descartadas).
 
 --- Validando números de control ---
-  ❌ TBD CZA: TBD=15237 (esperado 12646) | Clientes=2383 (esperado 2107)
-  ❌ TBD CORE + VALUE: TBD=10027 (esperado 8813) | Clientes=2243 (esperado 2014)
-  ❌ TBD ABOVE CORE: TBD=5210 (esperado 3833) | Clientes=1519 (esperado 1185)
-  ❌ TBD LATONES: TBD=3248 (esperado 2905) | Clientes=1391 (esperado 1200)
-  ❌ TBD 0.0% + MUL: TBD=1783 (esperado 1422) | Clientes=956 (esperado 773)
+  ❌ TBD CZA: TBD=16088 (esperado 12646) | Clientes=2425 (esperado 2107)
+  ❌ TBD CORE + VALUE: TBD=10592 (esperado 8813) | Clientes=2285 (esperado 2014)
+  ❌ TBD ABOVE CORE: TBD=5496 (esperado 3833) | Clientes=1558 (esperado 1185)
+  ❌ TBD LATONES: TBD=3501 (esperado 2905) | Clientes=1451 (esperado 1200)
+  ❌ TBD 0.0% + MUL: TBD=1927 (esperado 1422) | Clientes=1009 (esperado 773)
   ℹ️  TBD UNG + AGUA: sin número de control fijo (definición cambió recientemente), no se valida.
 
 ⚠️  Los números de control NO cierran. Puede ser normal si el mes avanzó
    (la base se actualiza a diario), pero si el desvío es grande, avisame.
 
-⚠️  14 clientes están en la base pero NO en Estructura (altas nuevas, no van a ningún VE):
-   310240, 437325, 568787, 568788, 568797, 569971, 570011, 570021, 570031, 570127, 570130, 570154, 570238, 570249
+⚠️  16 clientes están en la base pero NO en Estructura (altas nuevas, no van a ningún VE):
+   310240, 437325, 568787, 568788, 568797, 569971, 570011, 570021, 570031, 570127, 570130, 570154, 570238, 570249, 570250, 570333
 📄 Negociaciones: TBD+ONLINE 2026.xlsx
    131 clientes con negociación vigente hoy (16 filas vencidas o futuras, ignoradas).
 📄 Objetivos: objetivos.xlsx
    ℹ️  TBD LATONES: septiembre no trae objetivo nuevo, sigue el de 'julio'.
    27 vendedores y 4 supervisores con objetivo cargado.
    📝 Supervisor del 451: Eugenia Bianchi (en objetivos figura Euge Bianchi)
-📄 historial_compras.csv: 40219 filas cliente+categoría+mes cargadas.
-   Guardé historial_compras.csv con 40309 filas cliente+categoría+mes.
+📄 historial_compras.csv: 40309 filas cliente+categoría+mes cargadas.
+   Guardé historial_compras.csv con 40412 filas cliente+categoría+mes.
 ℹ️  No encontré el Excel de batallas, genero los reportes sin la sección Lotes.
 
 --- Armando reportes por vendedor ---
