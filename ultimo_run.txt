@@ -1,4 +1,4 @@
-2026-09-29 01:02:36 UTC
+2026-09-29 01:27:34 UTC
 
 === Generador de reportes TBD ===
 
@@ -16,7 +16,12 @@
 
 --- Controles ---
   ✅ Cerveza = Core+Value + Above Core (10491 + 5393 = 15884)
-  ℹ️  Sin corrida previa de este mes para comparar (arranca el histórico).
+  ✅ TBD CZA: 15884 -> 15884 (+0)
+  ✅ TBD CORE + VALUE: 10491 -> 10491 (+0)
+  ✅ TBD ABOVE CORE: 5393 -> 5393 (+0)
+  ✅ TBD LATONES: 3439 -> 3439 (+0)
+  ✅ TBD 0.0% + MUL: 1880 -> 1880 (+0)
+  ✅ TBD UNG + AGUA: 15671 -> 15671 (+0)
 📄 Objetivos: objetivos.xlsx
    ℹ️  TBD LATONES: septiembre no trae objetivo nuevo, sigue el de 'julio'.
    27 vendedores y 4 supervisores con objetivo cargado.
