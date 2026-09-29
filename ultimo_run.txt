@@ -1,4 +1,4 @@
-2026-09-29 01:29:47 UTC
+2026-09-29 01:37:57 UTC
 
 === Generador de reportes TBD ===
 
@@ -28,11 +28,10 @@
    📝 Supervisor del 451: Eugenia Bianchi (en objetivos figura Euge Bianchi)
 📄 historial_compras.csv: 41856 filas cliente+categoría+mes cargadas.
    Guardé historial_compras.csv con 41856 filas cliente+categoría+mes.
+   Guardé volumen_mensual.csv con 7595 filas cliente+mes.
 ℹ️  No encontré el Excel de batallas, genero los reportes sin la sección Lotes.
 
 --- Armando reportes por vendedor ---
-
-⚠️  No pude leer el registro de uso (The read operation timed out). El maestro sale sin esa sección.
    👤 Mariana Gonzalez: 5 territorios, 227 clientes.
    👤 Eugenia Bianchi: 8 territorios, 1216 clientes.
    👤 Santiago Saucedo: 6 territorios, 711 clientes.
