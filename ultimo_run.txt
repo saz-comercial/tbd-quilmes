@@ -1,4 +1,4 @@
-2026-09-29 00:38:31 UTC
+2026-09-29 01:02:36 UTC
 
 === Generador de reportes TBD ===
 
@@ -7,28 +7,21 @@
 📄 Estructura de clientes: Estructura actualizada 09-09-2026.xlsx
    3586 clientes reales en Estructura (16 filas basura descartadas).
 
---- Validando números de control ---
-  ❌ TBD CZA: TBD=15884 (esperado 12646) | Clientes=2407 (esperado 2107)
-  ❌ TBD CORE + VALUE: TBD=10491 (esperado 8813) | Clientes=2270 (esperado 2014)
-  ❌ TBD ABOVE CORE: TBD=5393 (esperado 3833) | Clientes=1539 (esperado 1185)
-  ❌ TBD LATONES: TBD=3439 (esperado 2905) | Clientes=1434 (esperado 1200)
-  ❌ TBD 0.0% + MUL: TBD=1880 (esperado 1422) | Clientes=991 (esperado 773)
-  ℹ️  TBD UNG + AGUA: sin número de control fijo (definición cambió recientemente), no se valida.
-
-⚠️  Los números de control NO cierran. Puede ser normal si el mes avanzó
-   (la base se actualiza a diario), pero si el desvío es grande, avisame.
-
 📌 11 clientes venden pero todavía no están en la Estructura. Los ubico con la zona y el territorio de la base:
    569971, 570011, 570021, 570031, 570127, 570130, 570154, 570238, 570249, 570250, 570333
 
 ℹ️  5 clientes de la base quedan afuera (son de otra zona): 310240, 437325, 568787, 568788, 568797
 📄 Negociaciones: TBD+ONLINE 2026.xlsx
    131 clientes con negociación vigente hoy (16 filas vencidas o futuras, ignoradas).
+
+--- Controles ---
+  ✅ Cerveza = Core+Value + Above Core (10491 + 5393 = 15884)
+  ℹ️  Sin corrida previa de este mes para comparar (arranca el histórico).
 📄 Objetivos: objetivos.xlsx
    ℹ️  TBD LATONES: septiembre no trae objetivo nuevo, sigue el de 'julio'.
    27 vendedores y 4 supervisores con objetivo cargado.
    📝 Supervisor del 451: Eugenia Bianchi (en objetivos figura Euge Bianchi)
-📄 historial_compras.csv: 41902 filas cliente+categoría+mes cargadas.
+📄 historial_compras.csv: 41856 filas cliente+categoría+mes cargadas.
    Guardé historial_compras.csv con 41856 filas cliente+categoría+mes.
 ℹ️  No encontré el Excel de batallas, genero los reportes sin la sección Lotes.
 
