@@ -1,4 +1,4 @@
-2026-09-29 00:32:40 UTC
+2026-09-29 00:38:31 UTC
 
 === Generador de reportes TBD ===
 
@@ -8,18 +8,20 @@
    3586 clientes reales en Estructura (16 filas basura descartadas).
 
 --- Validando números de control ---
-  ❌ TBD CZA: TBD=16088 (esperado 12646) | Clientes=2425 (esperado 2107)
-  ❌ TBD CORE + VALUE: TBD=10592 (esperado 8813) | Clientes=2285 (esperado 2014)
-  ❌ TBD ABOVE CORE: TBD=5496 (esperado 3833) | Clientes=1558 (esperado 1185)
-  ❌ TBD LATONES: TBD=3501 (esperado 2905) | Clientes=1451 (esperado 1200)
-  ❌ TBD 0.0% + MUL: TBD=1927 (esperado 1422) | Clientes=1009 (esperado 773)
+  ❌ TBD CZA: TBD=15884 (esperado 12646) | Clientes=2407 (esperado 2107)
+  ❌ TBD CORE + VALUE: TBD=10491 (esperado 8813) | Clientes=2270 (esperado 2014)
+  ❌ TBD ABOVE CORE: TBD=5393 (esperado 3833) | Clientes=1539 (esperado 1185)
+  ❌ TBD LATONES: TBD=3439 (esperado 2905) | Clientes=1434 (esperado 1200)
+  ❌ TBD 0.0% + MUL: TBD=1880 (esperado 1422) | Clientes=991 (esperado 773)
   ℹ️  TBD UNG + AGUA: sin número de control fijo (definición cambió recientemente), no se valida.
 
 ⚠️  Los números de control NO cierran. Puede ser normal si el mes avanzó
    (la base se actualiza a diario), pero si el desvío es grande, avisame.
 
-⚠️  16 clientes están en la base pero NO en Estructura (altas nuevas, no van a ningún VE):
-   310240, 437325, 568787, 568788, 568797, 569971, 570011, 570021, 570031, 570127, 570130, 570154, 570238, 570249, 570250, 570333
+📌 11 clientes venden pero todavía no están en la Estructura. Los ubico con la zona y el territorio de la base:
+   569971, 570011, 570021, 570031, 570127, 570130, 570154, 570238, 570249, 570250, 570333
+
+ℹ️  5 clientes de la base quedan afuera (son de otra zona): 310240, 437325, 568787, 568788, 568797
 📄 Negociaciones: TBD+ONLINE 2026.xlsx
    131 clientes con negociación vigente hoy (16 filas vencidas o futuras, ignoradas).
 📄 Objetivos: objetivos.xlsx
@@ -27,15 +29,15 @@
    27 vendedores y 4 supervisores con objetivo cargado.
    📝 Supervisor del 451: Eugenia Bianchi (en objetivos figura Euge Bianchi)
 📄 historial_compras.csv: 41902 filas cliente+categoría+mes cargadas.
-   Guardé historial_compras.csv con 41902 filas cliente+categoría+mes.
+   Guardé historial_compras.csv con 41856 filas cliente+categoría+mes.
 ℹ️  No encontré el Excel de batallas, genero los reportes sin la sección Lotes.
 
 --- Armando reportes por vendedor ---
    👤 Mariana Gonzalez: 5 territorios, 227 clientes.
-   👤 Eugenia Bianchi: 8 territorios, 1214 clientes.
-   👤 Santiago Saucedo: 6 territorios, 709 clientes.
-   👤 Aylen Mangold: 8 territorios, 1436 clientes.
-   🗝️  Maestro: 27 territorios, 3586 clientes.
+   👤 Eugenia Bianchi: 8 territorios, 1216 clientes.
+   👤 Santiago Saucedo: 6 territorios, 711 clientes.
+   👤 Aylen Mangold: 8 territorios, 1443 clientes.
+   🗝️  Maestro: 27 territorios, 3597 clientes.
    👔 Jefe de ventas: 4 zonas, 27 territorios.
 
 🔒 4 tableros de supervisor generados y cifrados.
