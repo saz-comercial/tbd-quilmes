@@ -1,4 +1,4 @@
-2026-10-20 00:10:29 UTC
+2026-10-20 00:23:04 UTC
 
 === Generador de reportes TBD ===
 
@@ -23,9 +23,6 @@
   ✅ TBD 0.0% + MUL: 599 -> 599 (+0)
   ✅ TBD UNG + AGUA: 4769 -> 4769 (+0)
 📄 Objetivos: objetivos_mensuales.xlsx
-   ℹ️  TBD CZA: octubre está en blanco, sigue el objetivo de septiembre.
-   ℹ️  TBD CORE + VALUE: octubre está en blanco, sigue el objetivo de septiembre.
-   ℹ️  TBD ABOVE CORE: octubre está en blanco, sigue el objetivo de septiembre.
    ℹ️  TBD LATONES: octubre está en blanco, sigue el objetivo de julio.
    ℹ️  TBD 0.0% + MUL: octubre está en blanco, sigue el objetivo de septiembre.
    ℹ️  TBD UNG + AGUA: octubre está en blanco, sigue el objetivo de septiembre.
