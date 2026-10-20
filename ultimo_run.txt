@@ -1,4 +1,4 @@
-2026-10-06 11:46:36 UTC
+2026-10-20 00:10:29 UTC
 
 === Generador de reportes TBD ===
 
@@ -16,18 +16,22 @@
 
 --- Controles ---
   ✅ Cerveza = Core+Value + Above Core (3874 + 1708 = 5582)
-  ℹ️  Sin corrida previa de este mes para comparar (arranca el histórico).
-📄 Objetivos: objetivos.xlsx
-   ⚠️  TBD CZA: no encontré columna de objetivo, queda sin objetivo.
-   ⚠️  TBD CORE + VALUE: no hay columna de octubre, uso la de 'septiembre'.
-   ⚠️  TBD LATONES: no hay columna de octubre, uso la de 'julio'.
-   ⚠️  TBD ABOVE CORE: no hay columna de octubre, uso la de 'septiembre'.
-   ⚠️  TBD 0.0% + MUL: no hay columna de octubre, uso la de 'septiembre'.
-   ⚠️  TBD UNG + AGUA: no hay columna de octubre, uso la de 'septiembre'.
-   ⚠️  Sin bloque en el archivo: ['TBD CZA']
+  ✅ TBD CZA: 5582 -> 5582 (+0)
+  ✅ TBD CORE + VALUE: 3874 -> 3874 (+0)
+  ✅ TBD ABOVE CORE: 1708 -> 1708 (+0)
+  ✅ TBD LATONES: 1310 -> 1310 (+0)
+  ✅ TBD 0.0% + MUL: 599 -> 599 (+0)
+  ✅ TBD UNG + AGUA: 4769 -> 4769 (+0)
+📄 Objetivos: objetivos_mensuales.xlsx
+   ℹ️  TBD CZA: octubre está en blanco, sigue el objetivo de septiembre.
+   ℹ️  TBD CORE + VALUE: octubre está en blanco, sigue el objetivo de septiembre.
+   ℹ️  TBD ABOVE CORE: octubre está en blanco, sigue el objetivo de septiembre.
+   ℹ️  TBD LATONES: octubre está en blanco, sigue el objetivo de julio.
+   ℹ️  TBD 0.0% + MUL: octubre está en blanco, sigue el objetivo de septiembre.
+   ℹ️  TBD UNG + AGUA: octubre está en blanco, sigue el objetivo de septiembre.
    27 vendedores y 4 supervisores con objetivo cargado.
    📝 Supervisor del 451: Eugenia Bianchi (en objetivos figura Euge Bianchi)
-📄 historial_compras.csv: 41963 filas cliente+categoría+mes cargadas.
+📄 historial_compras.csv: 44516 filas cliente+categoría+mes cargadas.
    Guardé historial_compras.csv con 44516 filas cliente+categoría+mes.
    Guardé volumen_mensual.csv con 9146 filas cliente+mes.
 ℹ️  No encontré el Excel de batallas, genero los reportes sin la sección Lotes.
