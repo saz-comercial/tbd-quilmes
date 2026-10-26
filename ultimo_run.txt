@@ -1,44 +1,44 @@
-2026-10-23 11:06:08 UTC
+2026-10-26 11:18:16 UTC
 
 === Generador de reportes TBD ===
 
 📄 Base de ventas: Base Santi.xlsx
-   29703 filas de venta cargadas.
+   31073 filas de venta cargadas.
 📄 Estructura de clientes: Estructura actualizada 09-09-2026.xlsx
    3586 clientes reales en Estructura (16 filas basura descartadas).
 
-📌 33 clientes venden pero todavía no están en la Estructura. Los ubico con la zona y el territorio de la base:
-   569971, 570012, 570021, 570031, 570084, 570127, 570130, 570154, 570224, 570242, 570249, 570250, 570267, 570277, 570289, 570302, 570321, 570333, 570337, 570394, 570426, 570429, 570435, 570466, 570477, 570492, 570508, 570529, 570558, 570668, 570686, 570688, 570739
+📌 34 clientes venden pero todavía no están en la Estructura. Los ubico con la zona y el territorio de la base:
+   569971, 570012, 570021, 570031, 570084, 570127, 570130, 570154, 570224, 570242, 570249, 570250, 570267, 570277, 570289, 570302, 570321, 570333, 570337, 570394, 570426, 570429, 570435, 570437, 570466, 570477, 570492, 570508, 570529, 570558, 570668, 570686, 570688, 570739
 
 ℹ️  7 clientes de la base quedan afuera (son de otra zona): 437325, 568787, 568788, 568789, 568790, 568797, 568800
 📄 Negociaciones: TBD+ONLINE 2026.xlsx
    126 clientes con negociación vigente hoy (54 filas vencidas o futuras, ignoradas).
 
 --- Controles ---
-  ✅ Cerveza = Core+Value + Above Core (9617 + 5201 = 14818)
-  ✅ TBD CZA: 14200 -> 14818 (+618)
-  ✅ TBD CORE + VALUE: 9295 -> 9617 (+322)
-  ✅ TBD ABOVE CORE: 4905 -> 5201 (+296)
-  ✅ TBD LATONES: 3342 -> 3473 (+131)
-  ✅ TBD 0.0% + MUL: 1875 -> 2025 (+150)
-  ✅ TBD UNG + AGUA: 12802 -> 13422 (+620)
+  ✅ Cerveza = Core+Value + Above Core (9959 + 5483 = 15442)
+  ✅ TBD CZA: 14818 -> 15442 (+624)
+  ✅ TBD CORE + VALUE: 9617 -> 9959 (+342)
+  ✅ TBD ABOVE CORE: 5201 -> 5483 (+282)
+  ✅ TBD LATONES: 3473 -> 3601 (+128)
+  ✅ TBD 0.0% + MUL: 2025 -> 2173 (+148)
+  ✅ TBD UNG + AGUA: 13422 -> 14068 (+646)
 📄 Objetivos: objetivos_mensuales.xlsx
    ℹ️  TBD LATONES: octubre está en blanco, sigue el objetivo de julio.
    ℹ️  TBD 0.0% + MUL: octubre está en blanco, sigue el objetivo de septiembre.
    ℹ️  TBD UNG + AGUA: octubre está en blanco, sigue el objetivo de septiembre.
    27 vendedores y 4 supervisores con objetivo cargado.
    📝 Supervisor del 451: Eugenia Bianchi (en objetivos figura Euge Bianchi)
-📄 historial_compras.csv: 46643 filas cliente+categoría+mes cargadas.
-   Guardé historial_compras.csv con 46759 filas cliente+categoría+mes.
-   Guardé volumen_mensual.csv con 10107 filas cliente+mes.
+📄 historial_compras.csv: 46759 filas cliente+categoría+mes cargadas.
+   Guardé historial_compras.csv con 46860 filas cliente+categoría+mes.
+   Guardé volumen_mensual.csv con 10143 filas cliente+mes.
 ℹ️  No encontré el Excel de batallas, genero los reportes sin la sección Lotes.
 
 --- Armando reportes por vendedor ---
    👤 Mariana Gonzalez: 5 territorios, 232 clientes.
    👤 Eugenia Bianchi: 8 territorios, 1223 clientes.
    👤 Santiago Saucedo: 6 territorios, 712 clientes.
-   👤 Aylen Mangold: 8 territorios, 1452 clientes.
-   🗝️  Maestro: 27 territorios, 3619 clientes.
+   👤 Aylen Mangold: 8 territorios, 1453 clientes.
+   🗝️  Maestro: 27 territorios, 3620 clientes.
    👔 Jefe de ventas: 4 zonas, 27 territorios.
 
 🔒 4 tableros de supervisor generados y cifrados.
