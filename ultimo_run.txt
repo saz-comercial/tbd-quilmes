@@ -1,46 +1,37 @@
-2026-11-05 13:00:16 UTC
+2026-11-05 15:10:08 UTC
 
 === Generador de reportes TBD ===
 
 📄 Base de ventas: Base Santi.xlsx
-   34937 filas de venta cargadas.
+   8068 filas de venta cargadas.
 📄 Estructura de clientes: Estructura actualizada 05-11-2026.xlsx
    3600 clientes reales en Estructura (6 filas basura descartadas).
-
-⚠️  Calibres NUEVOS de UNG/AGUAS que no vi antes (revisá si están bien): {'1/3 latas'}
-
-📌 4 clientes venden pero todavía no están en la Estructura. Los ubico con la zona y el territorio de la base:
-   390625, 436419, 457112, 527603
-
-ℹ️  7 clientes de la base quedan afuera (son de otra zona): 437325, 568787, 568788, 568789, 568790, 568797, 568800
 📄 Negociaciones: TBD+ONLINE 2026.xlsx
    124 clientes con negociación vigente hoy (86 filas vencidas o futuras, ignoradas).
 
 --- Controles ---
-  ✅ Cerveza = Core+Value + Above Core (10939 + 6288 = 17227)
-  ✅ TBD CZA: 17227 -> 17227 (+0)
-  ✅ TBD CORE + VALUE: 10939 -> 10939 (+0)
-  ✅ TBD ABOVE CORE: 6288 -> 6288 (+0)
-  ✅ TBD LATONES: 3994 -> 3994 (+0)
-  ✅ TBD 0.0% + MUL: 2526 -> 2526 (+0)
-  ✅ TBD UNG + AGUA: 15832 -> 15832 (+0)
+  ✅ Cerveza = Core+Value + Above Core (2993 + 1308 = 4301)
+  ℹ️  Sin corrida previa de este mes para comparar (arranca el histórico).
 📄 Objetivos: objetivos_mensuales.xlsx
-   ℹ️  TBD LATONES: octubre está en blanco, sigue el objetivo de julio.
-   ℹ️  TBD 0.0% + MUL: octubre está en blanco, sigue el objetivo de septiembre.
-   ℹ️  TBD UNG + AGUA: octubre está en blanco, sigue el objetivo de septiembre.
+   ℹ️  TBD CZA: noviembre está en blanco, sigue el objetivo de octubre.
+   ℹ️  TBD CORE + VALUE: noviembre está en blanco, sigue el objetivo de octubre.
+   ℹ️  TBD ABOVE CORE: noviembre está en blanco, sigue el objetivo de octubre.
+   ℹ️  TBD LATONES: noviembre está en blanco, sigue el objetivo de julio.
+   ℹ️  TBD 0.0% + MUL: noviembre está en blanco, sigue el objetivo de septiembre.
+   ℹ️  TBD UNG + AGUA: noviembre está en blanco, sigue el objetivo de septiembre.
    27 vendedores y 4 supervisores con objetivo cargado.
    📝 Supervisor del 451: Eugenia Bianchi (en objetivos figura Euge Bianchi)
 📄 historial_compras.csv: 47180 filas cliente+categoría+mes cargadas.
-   Guardé historial_compras.csv con 47180 filas cliente+categoría+mes.
-   Guardé volumen_mensual.csv con 10243 filas cliente+mes.
+   Guardé historial_compras.csv con 49310 filas cliente+categoría+mes.
+   Guardé volumen_mensual.csv con 11529 filas cliente+mes.
 ℹ️  No encontré el Excel de batallas, genero los reportes sin la sección Lotes.
 
 --- Armando reportes por vendedor ---
    👤 Mariana Gonzalez: 5 territorios, 234 clientes.
-   👤 Eugenia Bianchi: 8 territorios, 1205 clientes.
-   👤 Santiago Saucedo: 6 territorios, 706 clientes.
-   👤 Aylen Mangold: 8 territorios, 1459 clientes.
-   🗝️  Maestro: 27 territorios, 3604 clientes.
+   👤 Eugenia Bianchi: 8 territorios, 1204 clientes.
+   👤 Santiago Saucedo: 6 territorios, 704 clientes.
+   👤 Aylen Mangold: 8 territorios, 1458 clientes.
+   🗝️  Maestro: 27 territorios, 3600 clientes.
    👔 Jefe de ventas: 4 zonas, 27 territorios.
 
 🔒 4 tableros de supervisor generados y cifrados.
