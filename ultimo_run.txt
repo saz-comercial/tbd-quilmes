@@ -1,4 +1,4 @@
-2026-11-05 15:24:56 UTC
+2026-11-06 02:32:10 UTC
 
 === Generador de reportes TBD ===
 
@@ -25,15 +25,15 @@
    ℹ️  TBD 0.0% + MUL: noviembre está en blanco, sigue el objetivo de septiembre.
    ℹ️  TBD UNG + AGUA: noviembre está en blanco, sigue el objetivo de septiembre.
    27 vendedores y 4 supervisores con objetivo cargado.
-   📝 Supervisor del 451: Eugenia Bianchi (en objetivos figura Juan Somaglia)
+   📝 Supervisor del 450: Eugenia Bianchi (en objetivos figura Euge Bianchi)
 📄 historial_compras.csv: 49310 filas cliente+categoría+mes cargadas.
    Guardé historial_compras.csv con 49310 filas cliente+categoría+mes.
    Guardé volumen_mensual.csv con 11529 filas cliente+mes.
 ℹ️  No encontré el Excel de batallas, genero los reportes sin la sección Lotes.
 
 --- Armando reportes por vendedor ---
-   👤 Euge Bianchi: 5 territorios, 234 clientes.
-   👤 Eugenia Bianchi: 8 territorios, 1204 clientes.
+   👤 Eugenia Bianchi: 5 territorios, 234 clientes.
+   👤 Juan Somaglia: 8 territorios, 1204 clientes.
    👤 Santiago Saucedo: 6 territorios, 704 clientes.
    👤 Aylen Mangold: 8 territorios, 1458 clientes.
    🗝️  Maestro: 27 territorios, 3600 clientes.
