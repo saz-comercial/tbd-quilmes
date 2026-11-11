@@ -1,9 +1,9 @@
-2026-11-10 11:18:50 UTC
+2026-11-11 14:44:54 UTC
 
 === Generador de reportes TBD ===
 
 📄 Base de ventas: Base Santi.xlsx
-   14432 filas de venta cargadas.
+   15895 filas de venta cargadas.
 📄 Estructura de clientes: Estructura actualizada 05-11-2026.xlsx
    3600 clientes reales en Estructura (6 filas basura descartadas).
 
@@ -12,13 +12,13 @@
    124 clientes con negociación vigente hoy (86 filas vencidas o futuras, ignoradas).
 
 --- Controles ---
-  ✅ Cerveza = Core+Value + Above Core (5380 + 2250 = 7630)
-  ✅ TBD CZA: 5681 -> 7630 (+1949)
-  ✅ TBD CORE + VALUE: 3949 -> 5380 (+1431)
-  ✅ TBD ABOVE CORE: 1732 -> 2250 (+518)
-  ✅ TBD LATONES: 1267 -> 1703 (+436)
-  ✅ TBD 0.0% + MUL: 523 -> 737 (+214)
-  ✅ TBD UNG + AGUA: 4535 -> 6012 (+1477)
+  ✅ Cerveza = Core+Value + Above Core (5838 + 2495 = 8333)
+  ✅ TBD CZA: 7630 -> 8333 (+703)
+  ✅ TBD CORE + VALUE: 5380 -> 5838 (+458)
+  ✅ TBD ABOVE CORE: 2250 -> 2495 (+245)
+  ✅ TBD LATONES: 1703 -> 1864 (+161)
+  ✅ TBD 0.0% + MUL: 737 -> 853 (+116)
+  ✅ TBD UNG + AGUA: 6012 -> 6682 (+670)
 📄 Objetivos: objetivos_mensuales.xlsx
    ℹ️  TBD CZA: noviembre está en blanco, sigue el objetivo de octubre.
    ℹ️  TBD CORE + VALUE: noviembre está en blanco, sigue el objetivo de octubre.
@@ -28,9 +28,9 @@
    ℹ️  TBD UNG + AGUA: noviembre está en blanco, sigue el objetivo de septiembre.
    27 vendedores y 4 supervisores con objetivo cargado.
    📝 Supervisor del 450: Eugenia Bianchi (en objetivos figura Euge Bianchi)
-📄 historial_compras.csv: 49856 filas cliente+categoría+mes cargadas.
-   Guardé historial_compras.csv con 50546 filas cliente+categoría+mes.
-   Guardé volumen_mensual.csv con 12168 filas cliente+mes.
+📄 historial_compras.csv: 50546 filas cliente+categoría+mes cargadas.
+   Guardé historial_compras.csv con 50703 filas cliente+categoría+mes.
+   Guardé volumen_mensual.csv con 12234 filas cliente+mes.
 ℹ️  No encontré el Excel de batallas, genero los reportes sin la sección Lotes.
 
 --- Armando reportes por vendedor ---
