@@ -1,27 +1,27 @@
-2026-11-24 00:26:12 UTC
+2026-11-24 11:16:27 UTC
 
 === Generador de reportes TBD ===
 
 📄 Base de ventas: Base Santi.xlsx
-   27992 filas de venta cargadas.
+   30492 filas de venta cargadas.
 📄 Estructura de clientes: Estructura actualizada 05-11-2026.xlsx
    3600 clientes reales en Estructura (6 filas basura descartadas).
 
-📌 1 clientes venden pero todavía no están en la Estructura. Los ubico con la zona y el territorio de la base:
-   571265
+📌 5 clientes venden pero todavía no están en la Estructura. Los ubico con la zona y el territorio de la base:
+   571140, 571235, 571255, 571265, 571272
 
 ℹ️  4 clientes de la base quedan afuera (son de otra zona): 437325, 568787, 568788, 571069
 📄 Negociaciones: TBD+ONLINE 2026.xlsx
    124 clientes con negociación vigente hoy (86 filas vencidas o futuras, ignoradas).
 
 --- Controles ---
-  ✅ Cerveza = Core+Value + Above Core (9236 + 4535 = 13771)
-  ✅ TBD CZA: 13771 -> 13771 (+0)
-  ✅ TBD CORE + VALUE: 9236 -> 9236 (+0)
-  ✅ TBD ABOVE CORE: 4535 -> 4535 (+0)
-  ✅ TBD LATONES: 3074 -> 3074 (+0)
-  ✅ TBD 0.0% + MUL: 1679 -> 1679 (+0)
-  ✅ TBD UNG + AGUA: 12656 -> 12656 (+0)
+  ✅ Cerveza = Core+Value + Above Core (9884 + 5026 = 14910)
+  ✅ TBD CZA: 13771 -> 14910 (+1139)
+  ✅ TBD CORE + VALUE: 9236 -> 9884 (+648)
+  ✅ TBD ABOVE CORE: 4535 -> 5026 (+491)
+  ✅ TBD LATONES: 3074 -> 3304 (+230)
+  ✅ TBD 0.0% + MUL: 1679 -> 1854 (+175)
+  ✅ TBD UNG + AGUA: 12656 -> 13856 (+1200)
 📄 Objetivos: objetivos_mensuales.xlsx
    ℹ️  TBD CZA: noviembre está en blanco, sigue el objetivo de octubre.
    ℹ️  TBD CORE + VALUE: noviembre está en blanco, sigue el objetivo de octubre.
@@ -32,16 +32,16 @@
    27 vendedores y 4 supervisores con objetivo cargado.
    📝 Supervisor del 450: Eugenia Bianchi (en objetivos figura Euge Bianchi)
 📄 historial_compras.csv: 51849 filas cliente+categoría+mes cargadas.
-   Guardé historial_compras.csv con 51849 filas cliente+categoría+mes.
-   Guardé volumen_mensual.csv con 12657 filas cliente+mes.
+   Guardé historial_compras.csv con 52044 filas cliente+categoría+mes.
+   Guardé volumen_mensual.csv con 12724 filas cliente+mes.
 ℹ️  No encontré el Excel de batallas, genero los reportes sin la sección Lotes.
 
 --- Armando reportes por vendedor ---
    👤 Eugenia Bianchi: 5 territorios, 234 clientes.
-   👤 Juan Somaglia: 8 territorios, 1204 clientes.
+   👤 Juan Somaglia: 8 territorios, 1206 clientes.
    👤 Santiago Saucedo: 6 territorios, 705 clientes.
-   👤 Aylen Mangold: 8 territorios, 1458 clientes.
-   🗝️  Maestro: 27 territorios, 3601 clientes.
+   👤 Aylen Mangold: 8 territorios, 1460 clientes.
+   🗝️  Maestro: 27 territorios, 3605 clientes.
    👔 Jefe de ventas: 4 zonas, 27 territorios.
 
 🔒 4 tableros de supervisor generados y cifrados.
